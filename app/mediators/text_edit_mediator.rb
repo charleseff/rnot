@@ -1,5 +1,5 @@
 class TextEditMediator
-  def create_text_edit_scrolled_window
+  def self.create_text_edit_scrolled_window
     text_view = Gtk::TextView.new
     text_view.buffer.text = "Your 1st Gtk::TextView widget!"
     text_view_scrolled_win = Gtk::ScrolledWindow.new

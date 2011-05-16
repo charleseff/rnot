@@ -1,11 +1,13 @@
 #!/usr/bin/env ruby
+
+require "rubygems"
+require "bundler/setup"
 require 'gtk2'
-require 'active_support/core_ext'
-require File.join(File.dirname(__FILE__), '..', 'lib', 'autoload_for')
 
-AutoloadFor.autoload_for(File.join(File.dirname(__FILE__), 'mediators'))
+require File.expand_path('../../lib/autoload_for', __FILE__)
 
-@search_text = nil
+AutoloadFor.autoload_for(File.join(File.expand_path('..', __FILE__), 'mediators'))
+
 box1 = Gtk::VBox.new(false, 0)
 
 search_text_entry = SearchTextMediator.create_search_text_entry
@@ -28,7 +30,7 @@ window.signal_connect("destroy") do
   puts "destroy event occurred"
   Gtk.main_quit
 end
-window.set_size_request(250, 175)
+window.set_size_request(750, 500)
 window.border_width = 10
 
 window.add(box1)
