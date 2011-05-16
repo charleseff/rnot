@@ -32,4 +32,8 @@ class NotesListMediator
 
     scrolled_win
   end
+
+  def self.get_notes
+
+  end
 end
