@@ -11,4 +11,6 @@ class SearchTextMediator
 
     entry
   end
+
+
 end
