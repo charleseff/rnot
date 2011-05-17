@@ -6,18 +6,16 @@ class SetupMediator
   end
 
   def setup
-    setup_directories
-    setup_window
-    create_global_accel_keys
-    window
   end
 
   def setup_directories
     rnot_dir = File.join(ENV['HOME'], '.rnot')
+    app.notes_dir = File.join(rnot_dir, 'notes')
     unless FileTest::exists? rnot_dir
       Dir.mkdir rnot_dir
-      Dir.mkdir File.join(rnot_dir, 'notes')
+      Dir.mkdir app.notes_dir
     end
+
   end
 
   def setup_window
