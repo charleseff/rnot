@@ -12,8 +12,7 @@ class SetupMediator
     rnot_dir = File.join(ENV['HOME'], '.rnot')
     app.notes_dir = File.join(rnot_dir, 'notes')
     unless FileTest::exists? rnot_dir
-      Dir.mkdir rnot_dir
-      Dir.mkdir app.notes_dir
+      FileUtils.mkdir_p(app.notes_dir)
     end
 
   end

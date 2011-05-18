@@ -1,5 +1,7 @@
 - Features:
   - search
+    - instead of ferret, just use String#index on strings(?)
   - auto-save
+  - Ctrl-F on text view
   - encryption
 
