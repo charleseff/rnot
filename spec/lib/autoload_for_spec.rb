@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'active_support/inflector'
+include AutoloadFor
 
 describe AutoloadFor do
 
@@ -15,7 +16,7 @@ describe AutoloadFor do
       expect { Animal::Fish }.to raise_error
       expect { Zoo }.to raise_error
 
-      AutoloadFor.autoload_for fixtures_dir
+      autoload_for fixtures_dir
 
       expect { Animal }.to_not raise_error
       expect { Animal::Mammal }.to_not raise_error

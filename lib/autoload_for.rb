@@ -1,7 +1,7 @@
 require 'active_support/core_ext'
 
-class AutoloadFor
-  def self.autoload_for(dir)
+module AutoloadFor
+  def autoload_for(dir)
     Dir.glob(File.join(dir, "**/")).each do |inner_dir|
       dir_to_modulize = inner_dir.split("#{dir}/")[1]
       eval "module ::#{dir_to_modulize.chop.camelize}; end" if dir_to_modulize
