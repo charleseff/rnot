@@ -27,11 +27,7 @@ class App
   def setup_directories
     rnot_dir = File.join(ENV['HOME'], '.rnot')
     @notes_dir = File.join(rnot_dir, 'notes')
-    unless FileTest::exists? rnot_dir
-      Dir.mkdir rnot_dir
-      Dir.mkdir app.notes_dir
-    end
-
+    FileUtils.mkdir_p(@notes_dir)
   end
 
   def setup_window
@@ -86,3 +82,4 @@ class App
   end
 
 end
+

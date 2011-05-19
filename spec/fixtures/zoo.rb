@@ -1,0 +1,1 @@
+class Zoo; end
