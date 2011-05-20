@@ -1,6 +1,6 @@
-class SearchTextMediator
+module SearchTextMediator
 
-  def self.create_search_text_entry
+  def create_search_text_entry
     entry = Gtk::Entry.new
     entry.signal_connect('key-release-event') do |e, _|
       if @search_text != e.text

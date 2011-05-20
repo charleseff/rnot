@@ -1,9 +1,11 @@
 require 'singleton'
 
 class App
+  include SearchTextMediator
   include NotesListMediator
+  include NoteEditMediator
 
-  attr_accessor :search_text_entry, :notes_dir, :window, :notes_list_store
+  attr_accessor :search_text_entry, :notes_dir, :window, :notes_list_store, :text_edit_view, :current_text_saved
 
   def refresh_notes
     notes_list_store.clear
@@ -33,13 +35,13 @@ class App
   def setup_window
     box1 = Gtk::VBox.new(false, 0)
 
-    @search_text_entry = SearchTextMediator.create_search_text_entry
+    @search_text_entry = create_search_text_entry
     box1.pack_start(@search_text_entry, true, true, 0)
 
+    text_edit_scrolled_window = create_text_edit_scrolled_window
     notes_list_scrolled_window = create_notes_list_scrolled_window
     box1.pack_start(notes_list_scrolled_window, true, true, 0)
 
-    text_edit_scrolled_window = NoteEditMediator.create_text_edit_scrolled_window
     box1.pack_start(text_edit_scrolled_window, true, true, 0)
 
     @window = Gtk::Window.new
@@ -75,7 +77,7 @@ class App
                           Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE)
     focus.signal_connect('activate') do |_|
       puts "focus search text"
-      app.search_text_entry.grab_focus
+      search_text_entry.grab_focus
     end
 
     menu.show_all
