@@ -5,7 +5,8 @@ class App
   include NotesListMediator
   include NoteEditMediator
 
-  attr_accessor :search_text_entry, :notes_dir, :window, :notes_list_store, :text_edit_view, :current_text_saved
+  attr_accessor :search_text_entry, :notes_dir, :window, :notes_list_store, :text_edit_view, :current_text_saved,
+                :open_file
 
   def refresh_notes
     notes_list_store.clear
@@ -59,6 +60,10 @@ class App
     @window.border_width = 10
 
     @window.add(box1)
+
+    @window.signal_connect("focus-out-event") do |e, _|
+      save_note_if_open_and_changed
+    end
   end
 
   def create_global_accel_keys
@@ -83,5 +88,12 @@ class App
     menu.show_all
   end
 
+  def save_note_if_open_and_changed
+    if open_file.present? && open_file.saved_text != text_edit_view.buffer.text
+      File.open(File.join(notes_dir, open_file.file_name), 'w') { |f| f.write(text_edit_view.buffer.text) }
+      open_file.saved_text = text_edit_view.buffer.text
+    end
+
+  end
 end
 

@@ -19,9 +19,14 @@ module NotesListMediator
     treeview.model = store
 
     treeview.signal_connect('cursor-changed') do |e, _|
-      file_name= e.selection.selected.get_value(0)
-      @current_text_saved = File.new(File.join(notes_dir, file_name), 'r').read
-      text_edit_view.buffer.text = @current_text_saved
+      if e.selection.selected.present?
+        file_name= e.selection.selected.get_value(0)
+        saved_text = File.new(File.join(notes_dir, file_name), 'r').read
+        @open_file = OpenFile.new(file_name, saved_text)
+        text_edit_view.buffer.text = saved_text
+      else
+        @open_file = nil
+      end
     end
 
     scrolled_win = Gtk::ScrolledWindow.new
