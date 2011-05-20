@@ -1,12 +1,13 @@
 require 'singleton'
 
 class App
+  include Gtk
   include SearchTextMediator
   include NotesListMediator
   include NoteEditMediator
 
   attr_accessor :search_text_entry, :notes_dir, :window, :notes_list_store, :text_edit_view, :current_text_saved,
-                :open_file
+                :open_file, :treeview
 
   def refresh_notes
     notes_list_store.clear
@@ -34,7 +35,7 @@ class App
   end
 
   def setup_window
-    box1 = Gtk::VBox.new(false, 0)
+    box1 = VBox.new(false, 0)
 
     @search_text_entry = create_search_text_entry
     box1.pack_start(@search_text_entry, true, true, 0)
@@ -45,7 +46,7 @@ class App
 
     box1.pack_start(text_edit_scrolled_window, true, true, 0)
 
-    @window = Gtk::Window.new
+    @window = Window.new
     @window.resizable = true
     @window.title = "RNot"
     @window.signal_connect("delete_event") do
@@ -64,28 +65,18 @@ class App
     @window.signal_connect("focus-out-event") do |e, _|
       save_note_if_open_and_changed
     end
+
   end
 
   def create_global_accel_keys
-    menu = Gtk::Menu.new
-
-    focus = Gtk::MenuItem.new("Focus search text")
-    menu.append(focus)
-
-    # Create a keyboard accelerator group for the application.
-    group = Gtk::AccelGroup.new
+    group = AccelGroup.new
     window.add_accel_group(group)
-    menu.accel_group=(group)
 
-    # Add the necessary keyboard accelerators.
-    focus.add_accelerator('activate', group, Gdk::Keyval::GDK_L,
-                          Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE)
-    focus.signal_connect('activate') do |_|
-      puts "focus search text"
+    # ctrl-L:
+    group.connect(Gdk::Keyval::GDK_L, Gdk::Window::CONTROL_MASK,
+                  ACCEL_VISIBLE) do
       search_text_entry.grab_focus
     end
-
-    menu.show_all
   end
 
   def save_note_if_open_and_changed
@@ -96,4 +87,3 @@ class App
 
   end
 end
-

@@ -5,6 +5,7 @@
     - string replace for characters that files dont support
   - cleanup GUI, resizable list/edit
   - Ctrl-F on text view
+  - Ctrl-Z Ctrl-Shift-Z on text view
   - sort by heading
   - text preview
   - add frills (menu)

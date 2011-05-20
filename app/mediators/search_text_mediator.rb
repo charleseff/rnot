@@ -1,13 +1,20 @@
 module SearchTextMediator
+  include Gtk
 
   def create_search_text_entry
-    entry = Gtk::Entry.new
+    entry = Entry.new
     entry.signal_connect('key-release-event') do |e, _|
       if @search_text != e.text
         @search_text = e.text
-        puts "text changed to #{@search_text}"
       end
     end
+    entry.signal_connect('key-press-event') do |e, event_key|
+      if event_key.keyval == 65364
+        treeview.set_cursor(TreePath.new(0), nil, false)
+        treeview.grab_focus
+      end
+    end
+
 
     entry
   end
