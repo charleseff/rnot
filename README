@@ -1,7 +1,10 @@
-- Features:
-  - search
-    - instead of ferret, just use String#index on strings(?)
+- Feature todos:
   - auto-save
+  - search, file create
+    - instead of ferret, just use String#index on strings(?)
+    - string replace for characters that files dont support
+  - cleanup GUI, resizable list/edit
   - Ctrl-F on text view
-  - encryption
-
+  - sort by heading
+  - text preview
+  - add frills (menu)
