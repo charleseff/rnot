@@ -7,7 +7,7 @@ class App
   include NoteEditMediator
 
   attr_accessor :search_text_entry, :notes_dir, :window, :notes_list_store, :text_edit_view, :current_text_saved,
-                :open_file, :treeview
+                :open_file, :treeview, :search_text
 
   def refresh_notes
     notes_list_store.clear
@@ -69,11 +69,11 @@ class App
   end
 
   def create_global_accel_keys
-    group = AccelGroup.new
-    window.add_accel_group(group)
+    @main_accel_group = AccelGroup.new
+    window.add_accel_group(@main_accel_group)
 
     # ctrl-L:
-    group.connect(Gdk::Keyval::GDK_L, Gdk::Window::CONTROL_MASK,
+    @main_accel_group.connect(Gdk::Keyval::GDK_L, Gdk::Window::CONTROL_MASK,
                   ACCEL_VISIBLE) do
       search_text_entry.grab_focus
     end
