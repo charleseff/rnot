@@ -11,23 +11,33 @@ class App
 
   def refresh_notes
     notes_list_store.clear
-    files = Dir.glob((File.join(@notes_dir, "*"))).select { |x| test(?f, x) }
+    files = Dir.glob((File.join(@notes_dir, "*.txt"))).select { |x| test(?f, x) }
     files.each do |file|
       iter = notes_list_store.append
-      notes_list_store.set_value(iter, TITLE, File.basename(file))
+      notes_list_store.set_value(iter, TITLE, File.basename(file, '.*'))
       notes_list_store.set_value(iter, MODIFIED, File.new(file).mtime.to_s)
     end
   end
 
   def initialize
     setup_directories
+    setup_database
     setup_window
     create_global_accel_keys
     refresh_notes
-    window.show_all
   end
 
   private
+  def setup_database
+
+    config = {:database =>  File.join(@notes_dir, 'rnot.sqlite3'),
+              :adapter => 'sqlite3'}
+
+    ActiveRecord::Base.establish_connection(config)
+
+    CreateNotes.up unless Note.table_exists?
+  end
+
   def setup_directories
     rnot_dir = File.join(ENV['HOME'], '.rnot')
     @notes_dir = File.join(rnot_dir, 'notes')
@@ -74,9 +84,10 @@ class App
 
     # ctrl-L:
     @main_accel_group.connect(Gdk::Keyval::GDK_L, Gdk::Window::CONTROL_MASK,
-                  ACCEL_VISIBLE) do
+                              ACCEL_VISIBLE) do
       search_text_entry.grab_focus
     end
+
   end
 
   def save_note_if_open_and_changed

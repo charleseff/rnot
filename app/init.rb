@@ -1,8 +1,10 @@
 require "rubygems"
 require "bundler/setup"
+Bundler.require(:default)
 require 'gtk2'
-require 'autoload_for'
 
 include AutoloadFor
-autoload_for(File.join(File.expand_path('..', __FILE__), 'mediators'))
-autoload_for(File.join(File.expand_path('..', __FILE__), 'models'))
+dir = File.expand_path('..', __FILE__)
+autoload_for(File.join(dir, 'mediators'))
+autoload_for(File.join(dir, 'models'))
+autoload_for(File.join(dir, 'migrations'))
