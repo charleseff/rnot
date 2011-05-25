@@ -1,4 +1,5 @@
 - Feature todos:
+  - add menus
   - auto-save
   - search, file create
     - instead of ferret, just use String#index on strings(?)

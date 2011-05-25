@@ -7,7 +7,7 @@ class App
   include NoteEditMediator
 
   attr_accessor :search_text_entry, :notes_dir, :window, :notes_list_store, :text_edit_view, :current_text_saved,
-                :open_file, :treeview, :search_text
+                :open_file, :treeview, :search_text, :paned
 
   def refresh_notes
     notes_list_store.clear
@@ -48,13 +48,17 @@ class App
     box1 = VBox.new(false, 0)
 
     @search_text_entry = create_search_text_entry
-    box1.pack_start(@search_text_entry, true, true, 0)
+    box1.pack_start(@search_text_entry, false, true, 5)
 
     text_edit_scrolled_window = create_text_edit_scrolled_window
     notes_list_scrolled_window = create_notes_list_scrolled_window
-    box1.pack_start(notes_list_scrolled_window, true, true, 0)
 
-    box1.pack_start(text_edit_scrolled_window, true, true, 0)
+    @paned = VPaned.new
+    @paned.add1(notes_list_scrolled_window)
+    @paned.add2(text_edit_scrolled_window)
+
+    box1.pack_start(@paned, true, true, 0)
+    @paned.position = @paned.max_position/2
 
     @window = Window.new
     @window.resizable = true
