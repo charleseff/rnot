@@ -16,7 +16,7 @@ module NotesListMediator
         save_note_if_open_and_changed
 
         file_name = e.selection.selected.get_value(TITLE) + '.txt'
-        saved_text = File.new(File.join(notes_dir, file_name), 'r').read
+        saved_text = File.new(File.join(App.notes_dir, file_name), 'r').read
         @open_file = OpenFile.new(file_name, saved_text)
         text_edit_view.buffer.text = saved_text
       else
