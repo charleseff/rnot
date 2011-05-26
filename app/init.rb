@@ -1,6 +1,6 @@
 require "rubygems"
-require "bundler/setup"
-Bundler.require(:default)
+require "bundler"
+Bundler.require(:default, ENV["RNOT_ENV"].to_sym)
 require 'gtk2'
 
 include AutoloadFor

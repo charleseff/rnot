@@ -3,26 +3,14 @@ module NotesListMediator
 
   TITLE = 0
   MODIFIED = 1
+  ID = 2
 
   def create_notes_list_scrolled_window
     @treeview = TreeView.new
     setup_tree_view(@treeview)
-    store = ListStore.new(String, String)
+    store = ListStore.new(String, String, Integer)
     @notes_list_store = store
     @treeview.model = store
-
-    @treeview.signal_connect('cursor-changed') do |e, _|
-      if e.selection.selected.present?
-        save_note_if_open_and_changed
-
-        file_name = e.selection.selected.get_value(TITLE) + '.txt'
-        saved_text = File.new(File.join(App.notes_dir, file_name), 'r').read
-        @open_file = OpenFile.new(file_name, saved_text)
-        text_edit_view.buffer.text = saved_text
-      else
-        @open_file = nil
-      end
-    end
 
     scrolled_win = ScrolledWindow.new
     scrolled_win.add(@treeview)
@@ -45,8 +33,11 @@ module NotesListMediator
         text_edit_view.grab_focus
       end
     end
+    treeview.signal_connect('cursor-changed') do |t, _|
+      handle_notes_list_cursor_change(t)
+    end
+
 
   end
-
 
 end

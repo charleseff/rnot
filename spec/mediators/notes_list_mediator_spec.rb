@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe SearchTextMediator do
   before :each do
+    2.times { Factory.create(:note) }
     @app = App.new
   end
 

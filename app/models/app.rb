@@ -5,17 +5,9 @@ class App
   include NoteEditMediator
 
   attr_accessor :search_text_entry, :window, :notes_list_store, :text_edit_view, :current_text_saved,
-                :open_file, :treeview, :search_text, :paned
+                :open_note, :treeview, :search_text, :paned
 
-  def refresh_notes
-    notes_list_store.clear
-    files = Dir.glob((File.join(App.notes_dir, "*.txt"))).select { |x| test(?f, x) }
-    files.each do |file|
-      iter = notes_list_store.append
-      notes_list_store.set_value(iter, TITLE, File.basename(file, '.*'))
-      notes_list_store.set_value(iter, MODIFIED, File.new(file).mtime.to_s)
-    end
-  end
+  include NoteStorage::Sqlite3
 
   def initialize
     setup_directories
@@ -122,12 +114,5 @@ class App
     menubar
   end
 
-  def save_note_if_open_and_changed
-    if open_file.present? && open_file.saved_text != text_edit_view.buffer.text
-      File.open(File.join(notes_dir, open_file.file_name), 'w') { |f| f.write(text_edit_view.buffer.text) }
-      open_file.saved_text = text_edit_view.buffer.text
-    end
-
-  end
 
 end

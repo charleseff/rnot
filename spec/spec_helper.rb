@@ -1,6 +1,7 @@
 ENV["RNOT_ENV"] = 'test'
 
 require File.join(File.expand_path('../..', __FILE__), 'app', 'init')
+require 'factories'
 
 RSpec.configure do |config|
   config.mock_with :rspec
