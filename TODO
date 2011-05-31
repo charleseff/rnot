@@ -1,5 +1,5 @@
 - Feature todos:
-  - search, create note
+  - create note
     - instead of ferret, just use String#index on strings(?)
     - string replace for characters that files dont support
   - SimpleNote integration

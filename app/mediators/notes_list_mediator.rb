@@ -5,6 +5,8 @@ module NotesListMediator
   MODIFIED = 1
   ID = 2
 
+  attr_accessor :treeview, :notes_list_store
+
   def create_notes_list_scrolled_window
     @treeview = TreeView.new
     setup_tree_view(@treeview)

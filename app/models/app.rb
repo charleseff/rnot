@@ -1,13 +1,13 @@
 class App
   include Gtk
+  
   include SearchTextMediator
   include NotesListMediator
   include NoteEditMediator
 
-  attr_accessor :search_text_entry, :window, :notes_list_store, :text_edit_view, :current_text_saved,
-                :open_note, :treeview, :search_text, :paned
-
   include NoteStorage::Sqlite3
+
+  attr_accessor :window, :open_note, :paned
 
   def initialize
     setup_directories

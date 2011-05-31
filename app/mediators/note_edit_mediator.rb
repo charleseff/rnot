@@ -1,6 +1,8 @@
 module NoteEditMediator
   include Gtk
 
+  attr_accessor :text_edit_view
+
   def create_text_edit_scrolled_window
     @text_edit_view = TextView.new
     @text_edit_view.buffer.text = ""

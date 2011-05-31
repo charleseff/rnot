@@ -1,6 +1,8 @@
 module SearchTextMediator
   include Gtk
 
+  attr_accessor :search_text, :search_text_entry
+
   def create_search_text_entry
     entry = Entry.new
     entry.signal_connect('key-release-event') do |e, _|
