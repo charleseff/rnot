@@ -8,9 +8,9 @@ module NotesListMediator
   def create_notes_list_scrolled_window
     @treeview = TreeView.new
     setup_tree_view(@treeview)
-    store = ListStore.new(String, String, Integer)
-    @notes_list_store = store
-    @treeview.model = store
+    @notes_list_store = ListStore.new(String, String, Integer)
+
+    @treeview.model = @notes_list_store
 
     scrolled_win = ScrolledWindow.new
     scrolled_win.add(@treeview)
@@ -23,9 +23,11 @@ module NotesListMediator
   def setup_tree_view(treeview)
     renderer = CellRendererText.new
     column = TreeViewColumn.new("Title", renderer, "text" => TITLE)
+    column.sort_column_id = TITLE
     treeview.append_column(column)
     renderer = CellRendererText.new
     column = TreeViewColumn.new("Date Modified", renderer, "text" => MODIFIED)
+    column.sort_column_id = MODIFIED
     treeview.append_column(column)
 
     treeview.signal_connect("key-press-event") do |window, event_key|
@@ -36,8 +38,6 @@ module NotesListMediator
     treeview.signal_connect('cursor-changed') do |t, _|
       handle_notes_list_cursor_change(t)
     end
-
-
   end
 
 end
