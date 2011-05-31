@@ -10,8 +10,8 @@ describe NoteStorage::Sqlite3 do
     context "note is saved" do
       before do
         @iter = @app.treeview.model.get_iter('0')
-        @app.open_note = OpenNote.new(@iter)
-        @note = @app.open_note.note
+        @app.open_note = Note.find(@iter[App::ID])
+        @note = @app.open_note
         @app.text_edit_view.buffer.text = 'Something different'
       end
 

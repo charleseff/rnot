@@ -6,6 +6,6 @@ class OpenNote
   end
 
   def note
-    @note = Note.find(iter[App::ID])
+    @note ||= Note.find(iter[App::ID])
   end
 end

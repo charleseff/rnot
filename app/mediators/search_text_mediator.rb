@@ -6,6 +6,10 @@ module SearchTextMediator
     entry.signal_connect('key-release-event') do |e, _|
       if @search_text != e.text
         @search_text = e.text
+        notes_found = Note.all.select do |n|
+          n.title.index(@search_text) || n.body.index(@search_text)
+        end
+        refresh_notes(notes_found)
       end
     end
 
