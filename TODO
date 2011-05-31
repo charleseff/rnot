@@ -1,10 +1,8 @@
 - Feature todos:
   - create note
-    - instead of ferret, just use String#index on strings(?)
-    - string replace for characters that files dont support
   - SimpleNote integration
-  - remember last session's settings
   - Ctrl-F on text view
+  - remember last session's settings
   - Ctrl-Z Ctrl-Shift-Z on text view
   - text preview on list widget
   - add frills (menu)

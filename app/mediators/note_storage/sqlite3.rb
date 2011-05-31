@@ -17,8 +17,10 @@ module NoteStorage::Sqlite3
 
       @open_note = Note.find(treeview.selection.selected[App::ID])
       text_edit_view.buffer.text = @open_note.body
+      @search_text = treeview.selection.selected[App::TITLE]
+      @search_text_entry.text = treeview.selection.selected[App::TITLE]
     else
-      @open_note = nil
+      clear_open_note
     end
 
   end

@@ -13,6 +13,11 @@ describe SearchTextMediator do
         expect { @app.search_text_entry.signal_emit("key-release-event", nil) }.
             to change { @app.search_text }.from(nil).to('blady')
       end
+
+      it 'should clear the open note' do
+        @app.should_receive(:clear_open_note).exactly(1).times
+        @app.search_text_entry.signal_emit("key-release-event", nil) #, 114)
+      end
     end
 
   end

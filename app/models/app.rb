@@ -71,7 +71,7 @@ class App
     menubar = create_global_accel_keys_and_menus
     box1.pack_start(menubar, false, true, 0)
 
-    @search_text_entry = create_search_text_entry
+    create_search_text_entry
     box1.pack_start(@search_text_entry, false, true, 5)
 
     text_edit_scrolled_window = create_text_edit_scrolled_window
