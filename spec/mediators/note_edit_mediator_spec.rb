@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe NoteStorage::Sqlite3 do
+describe NoteEditMediator do
   before :each do
     2.times { Factory.create(:note, :updated_at => Time.now-1.day, :created_at => Time.now-1.day) }
     @app = App.new

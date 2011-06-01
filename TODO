@@ -1,6 +1,6 @@
 - Feature todos:
-  - create note
   - SimpleNote integration
+  - deletion
   - Ctrl-F on text view
   - remember last session's settings
   - Ctrl-Z Ctrl-Shift-Z on text view

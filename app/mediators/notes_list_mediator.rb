@@ -38,8 +38,38 @@ module NotesListMediator
       end
     end
     treeview.signal_connect('cursor-changed') do |t, _|
-      handle_notes_list_cursor_change(t)
+      if t.selection.selected.present?
+        save_note_if_open_and_changed
+
+        @open_note = Note.find(t.selection.selected[App::ID])
+        text_edit_view.buffer.text = @open_note.body
+        @search_text = t.selection.selected[App::TITLE]
+        @search_text_entry.text = t.selection.selected[App::TITLE]
+      else
+        clear_open_note
+      end
+
     end
   end
+
+  def refresh_notes(notes = Note.all, selected_note = nil)
+    notes_list_store.clear
+    notes.each do |note|
+      iter = notes_list_store.append
+      notes_list_store.set_value(iter, TITLE, note.title)
+      notes_list_store.set_value(iter, MODIFIED, note.updated_at.to_s)
+      notes_list_store.set_value(iter, ID, note.id)
+      if selected_note == note
+        treeview.selection.select_iter iter
+        @open_note = Note.find(treeview.selection.selected[App::ID])
+        text_edit_view.buffer.text = @open_note.body
+      end
+    end
+
+  end
+
+  def handle_notes_list_cursor_change(treeview)
+  end
+
 
 end

@@ -5,7 +5,7 @@ class App
   include NotesListMediator
   include NoteEditMediator
 
-  include NoteStorage::Sqlite3
+#  include NoteStorage::Sqlite3
 
   attr_accessor :window, :open_note, :paned
 
