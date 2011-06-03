@@ -6,3 +6,4 @@
   - Ctrl-Z Ctrl-Shift-Z on text view
   - text preview on list widget
   - add frills (menu)
+  - move migrations to be outside of rails (see http://adam.heroku.com/past/2009/2/28/activerecord_migrations_outside_rails/)

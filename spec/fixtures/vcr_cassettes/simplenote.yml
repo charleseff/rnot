@@ -1,0 +1,55 @@
+--- 
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :post
+    uri: https://simple-note.appspot.com:443/api/login
+    body: |
+      ZW1haWw9Y2hhcmxlcy5maW5rZWwlMkJ0ZXN0JTQwZ21haWwuY29tJnBhc3N3
+      b3JkPWp1c3R0ZXN0aW5n
+
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      set-cookie: 
+      - auth=3E3ECB0275412004E82E64854CEF04F6721FD77175E3047668FF27B5C334F190; expires=Fri, 17-Jun-2011 23:31:50 GMT
+      - email=charles.finkel+test@gmail.com; expires=Fri, 17-Jun-2011 23:31:50 GMT
+      account-type: 
+      - "000"
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 03 Jun 2011 23:31:50 GMT
+      server: 
+      - Google Frontend
+    body: 3E3ECB0275412004E82E64854CEF04F6721FD77175E3047668FF27B5C334F190
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api/index?auth=3E3ECB0275412004E82E64854CEF04F6721FD77175E3047668FF27B5C334F190&email=charles.finkel%2Btest%40gmail.com
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 03 Jun 2011 23:31:53 GMT
+      server: 
+      - Google Frontend
+    body: "[{\"deleted\": false, \"modify\": \"2011-06-03 22:57:29.265000\", \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjduukIDA\"}, {\"deleted\": true, \"modify\": \"2011-06-03 22:49:46\", \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjay-cIDA\"}, {\"deleted\": true, \"modify\": \"2011-06-03 22:49:21.294811\", \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiJvucIDA\"}, {\"deleted\": true, \"modify\": \"2011-06-03 22:49:21.092121\", \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiTjukIDA\"}, {\"deleted\": true, \"modify\": \"2011-06-03 22:49:20.833242\", \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjDpuIIDA\"}, {\"deleted\": true, \"modify\": \"2011-06-03 22:49:20.617395\", \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiIvucIDA\"}, {\"deleted\": true, \"modify\": \"2011-06-03 22:49:20.427956\", \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiJk94IDA\"}, {\"deleted\": true, \"modify\": \"2011-06-03 22:49:20.234557\", \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjJq-kIDA\"}, {\"deleted\": true, \"modify\": \"2011-06-03 22:49:19.998342\", \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRi7lekIDA\"}, {\"deleted\": true, \"modify\": \"2011-06-03 22:49:19.759453\", \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiv0ukIDA\"}, {\"deleted\": true, \"modify\": \"2011-06-03 22:49:19.392222\", \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiS4OYIDA\"}, {\"deleted\": true, \"modify\": \"2011-06-03 22:49:19.197081\", \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjqjeUIDA\"}, {\"deleted\": true, \"modify\": \"2011-06-03 22:49:18.982741\", \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjBlOMIDA\"}, {\"deleted\": true, \"modify\": \"2011-06-03 22:49:18.789045\", \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjC4uMIDA\"}, {\"deleted\": true, \"modify\": \"2011-06-03 22:49:18.577555\", \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiYjukIDA\"}, {\"deleted\": true, \"modify\": \"2011-06-03 22:49:18.367819\", \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRj1gOQIDA\"}, {\"deleted\": true, \"modify\": \"2011-06-03 22:49:17.803543\", \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjAl-gIDA\"}, {\"deleted\": true, \"modify\": \"2011-06-03 22:49:17.625895\", \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjm1-MIDA\"}, {\"deleted\": true, \"modify\": \"2011-06-03 22:49:17.441434\", \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjs7uQIDA\"}, {\"deleted\": true, \"modify\": \"2011-06-03 22:49:17.195663\", \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjtoOEIDA\"}, {\"deleted\": true, \"modify\": \"2011-06-03 22:49:16.991751\", \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRidrOMIDA\"}]"
+    http_version: "1.1"

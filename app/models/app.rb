@@ -1,9 +1,10 @@
 class App
   include Gtk
-  
+
   include SearchTextMediator
   include NotesListMediator
   include NoteEditMediator
+  include SimplenoteMediator
 
 #  include NoteStorage::Sqlite3
 
@@ -38,6 +39,11 @@ class App
     }.call
   end
 
+  def internet_connection?
+    Ping.pingecho "google.com", 1, 80
+  end
+
+
   private
   def setup_database
     ActiveRecord::Base.establish_connection(App.database_config)
@@ -53,11 +59,9 @@ class App
     @window.resizable = true
     @window.title = "RNot"
     @window.signal_connect("delete_event") do
-      puts "delete event occurred"
       false
     end
     @window.signal_connect("destroy") do
-      puts "destroy event occurred"
       Gtk.main_quit
     end
     @window.set_size_request(750, 500)

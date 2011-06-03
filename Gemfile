@@ -1,12 +1,19 @@
 source "http://rubygems.org"
 
-gem 'activesupport', '3.0.7'
-gem 'i18n', '0.5.0'
-gem 'autoload_for', '0.0.1'
-gem 'sqlite3', '1.3.3'
-gem 'activerecord', '3.0.7', :require => 'active_record'
+gem 'activesupport'
+gem 'i18n'
+gem 'autoload_for'
+gem 'sqlite3'
+gem 'activerecord', :require => 'active_record'
+gem 'simplenote'
 
 group :test do
   gem 'rspec', '2.6.0'
   gem 'factory_girl', '1.3.3'
+  gem 'vcr'
+  gem 'fakeweb'
+end
+
+group :console do
+  gem 'awesome_print', :require => 'ap'
 end

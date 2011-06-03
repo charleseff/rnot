@@ -3,6 +3,10 @@ class CreateNotes < ActiveRecord::Migration
     create_table :notes do |t|
       t.string :title
       t.text :body
+      t.string :simplenote_key
+      t.date :simplenote_modify
+      t.boolean :modified_locally, :default => false
+      
       t.timestamps
     end
   end

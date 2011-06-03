@@ -15,3 +15,9 @@ RSpec.configure do |config|
     Note.destroy_all
   end
 end
+
+VCR.config do |c|
+  c.cassette_library_dir = 'fixtures/vcr_cassettes'
+  c.stub_with :fakeweb # or :fakeweb
+    c.default_cassette_options = { :record => :all}
+end
