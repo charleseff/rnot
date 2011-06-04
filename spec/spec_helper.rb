@@ -8,7 +8,9 @@ RSpec.configure do |config|
 
   config.before(:all) do
     ActiveRecord::Base.establish_connection(App.database_config)
-    CreateNotes.up unless Note.table_exists?
+
+    CreateNotes.down
+    CreateNotes.up
   end
 
   config.before(:each) do
@@ -18,6 +20,6 @@ end
 
 VCR.config do |c|
   c.cassette_library_dir = 'fixtures/vcr_cassettes'
-  c.stub_with :fakeweb # or :fakeweb
-    c.default_cassette_options = { :record => :all}
+  c.stub_with :fakeweb
+  c.default_cassette_options = {:record => :none}
 end

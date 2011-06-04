@@ -4,16 +4,14 @@ class App
   include SearchTextMediator
   include NotesListMediator
   include NoteEditMediator
-  include SimplenoteMediator
 
-#  include NoteStorage::Sqlite3
-
-  attr_accessor :window, :open_note, :paned
+  attr_accessor :window, :open_note, :paned, :simplenote
 
   def initialize
     setup_directories
     setup_database
     setup_window
+    @simplenote = SimplenoteMediator.new if internet_connection?
 #    create_global_accel_keys_and_menus
     refresh_notes
   end
