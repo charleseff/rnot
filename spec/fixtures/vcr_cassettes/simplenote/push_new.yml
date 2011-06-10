@@ -1,0 +1,55 @@
+--- 
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :post
+    uri: https://simple-note.appspot.com:443/api/login
+    body: |
+      ZW1haWw9Y2hhcmxlcy5maW5rZWwlMkJ0ZXN0JTQwZ21haWwuY29tJnBhc3N3
+      b3JkPWp1c3R0ZXN0aW5n
+
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      set-cookie: 
+      - auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0; expires=Fri, 24-Jun-2011 23:38:30 GMT
+      - email=charles.finkel+test@gmail.com; expires=Fri, 24-Jun-2011 23:38:30 GMT
+      account-type: 
+      - "000"
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 23:38:31 GMT
+      server: 
+      - Google Frontend
+    body: 8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :post
+    uri: https://simple-note.appspot.com:443/api2/data?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com
+    body: "{\"content\":\"tha real title\\n\\nthe real body\"}"
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 23:38:32 GMT
+      server: 
+      - Google Frontend
+    body: "{\"modifydate\": \"1307749112.024901\", \"tags\": [], \"deleted\": 0, \"createdate\": \"1307749112.024901\", \"systemtags\": [], \"version\": 1, \"syncnum\": 1, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiapewIDA\", \"minversion\": 1}"
+    http_version: "1.1"

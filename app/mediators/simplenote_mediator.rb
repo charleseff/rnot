@@ -35,12 +35,15 @@ class SimplenoteMediator
   def push
     notes_to_push.each do |note|
       if note.simplenote_key.present?
-        update = simplenote.update_note(note.simplenote_key, note.to_simplenote_content)
-        g = 4
+        update_hash = simplenote.update_note(note.simplenote_key, note.to_simplenote_content)
+        note.update_attributes(:simplenote_syncnum => update_hash['syncnum'])
+        notes_to_push
       else
-# create note
+        create_hash = simplenote.create_note(note.to_simplenote_content)
+        note.update_attributes(:simplenote_syncnum => create_hash['syncnum'], :simplenote_key => create_hash['key'])
       end
     end
+    notes_to_push.clear
   end
 
   def sync

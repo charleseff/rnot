@@ -96,20 +96,37 @@ describe SimplenoteMediator do
       end
       it "updates note's server syncnum" do
         before_syncnum = @note.reload.simplenote_syncnum
-        VCR.use_cassette('simplenote_push') { @simplenote.push }
+        VCR.use_cassette('simplenote/push') { @simplenote.push }
         @note.reload.simplenote_syncnum.should > before_syncnum
       end
       it 'removes note from the queue' do
         @simplenote.notes_to_push.should include @note
-        VCR.use_cassette('simplenote_push') { @simplenote.push }
+        VCR.use_cassette('simplenote/push') { @simplenote.push }
         @simplenote.notes_to_push.should_not include @note
       end
     end
 
     context 'notes on the local queue are new' do
-      it 'adds note to the server'
-      it 'updates local note with server key and modify time'
-      it 'removes note from the queue'
+      before do
+        @note = Factory(:note, :body => 'the real body', :updated_at => Time.now-1.day, :created_at => Time.now-1.day, :title => 'tha real title')
+        @simplenote.notes_to_push << @note
+      end
+      it 'updates local note with server key' do
+        expect { VCR.use_cassette('simplenote/push_new') { @simplenote.push } }.to change { @note.reload.simplenote_key.present? }.from(false).to(true)
+      end
+      it 'updates local note with syncnum' do
+        expect { VCR.use_cassette('simplenote/push_new') { @simplenote.push } }.to change { @note.reload.simplenote_syncnum.present? }.from(false).to(true)
+      end
+      it 'removes note from the queue' do
+        VCR.use_cassette('simplenote/push_new') { @simplenote.push }
+        @simplenote.notes_to_push.should_not include @note
+      end
+      it 'adds note to the server' do
+        VCR.use_cassette('simplenote/push_new_ands_to_index') do
+          @simplenote.push
+          @simplenote.get_note_hashes.map { |h| h['key'] }.should include(@note.reload.simplenote_key)
+        end
+      end
     end
   end
 
