@@ -34,10 +34,8 @@ class SimplenoteMediator
 
   def push
     notes_to_push.each do |note|
-      #
       if note.simplenote_key.present?
-        debugger
-        f = simplenote.update_note(note.simplenote_key, note.to_simplenote_content)
+        update = simplenote.update_note(note.simplenote_key, note.to_simplenote_content)
         g = 4
       else
 # create note

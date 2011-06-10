@@ -19,7 +19,7 @@ describe SimplenoteMediator do
       end
 
       it 'deletes the note locally' do
-        expect { VCR.use_cassette('simplenote/deleted_on_server', :record => :none) { @simplenote.pull } }.to change { Note.find_by_simplenote_key(@deleted_key).present? }.from(true).to(false)
+        expect { VCR.use_cassette('simplenote/pull', :record => :none) { @simplenote.pull } }.to change { Note.find_by_simplenote_key(@deleted_key).present? }.from(true).to(false)
       end
     end
 
@@ -31,18 +31,18 @@ describe SimplenoteMediator do
       end
 
       it "updates note title" do
-        expect { VCR.use_cassette('simplenote/updated_on_server', :record => :none) { @simplenote.pull } }.to change { @note.reload.title }.to('tha title')
+        expect { VCR.use_cassette('simplenote/pull', :record => :none) { @simplenote.pull } }.to change { @note.reload.title }.to('tha title')
       end
       it "updates note body" do
-        expect { VCR.use_cassette('simplenote/updated_on_server') { @simplenote.pull } }.to change { @note.reload.body }.from('doo dah').to('some ish')
+        expect { VCR.use_cassette('simplenote/pull', :record => :none) { @simplenote.pull } }.to change { @note.reload.body }.from('doo dah').to('some ish')
       end
       it "updates simplenote_syncnum" do
-        expect { VCR.use_cassette('simplenote/updated_on_server') { @simplenote.pull } }.to
+        expect { VCR.use_cassette('simplenote/pull', :record => :none) { @simplenote.pull } }.to
         change { @note.reload.simplenote_syncnum }.to(2)
       end
       it "updates updated_at time" do
         updated_at_before = @note.updated_at
-        VCR.use_cassette('simplenote/updated_on_server') { @simplenote.pull }
+        VCR.use_cassette('simplenote/pull') { @simplenote.pull }
         @note.reload.updated_at.should > updated_at_before
       end
     end
@@ -50,13 +50,13 @@ describe SimplenoteMediator do
     context 'local note present that is not updated on the server' do
       before do
         @updated_key = 'agtzaW1wbGUtbm90ZXINCxIETm90ZRjduukIDA'
-        @note = Factory(:note, :simplenote_key => @updated_key, :simplenote_syncnum => 2,
+        @note = Factory(:note, :simplenote_key => @updated_key, :simplenote_syncnum => 7,
                         :body => 'some ish', :updated_at => Time.now-1.day, :created_at => Time.now-1.day)
       end
 
       it "does not update updated_at time" do
         updated_at_before = @note.updated_at
-        VCR.use_cassette('simplenote_pull') { @simplenote.pull }
+        VCR.use_cassette('simplenote/pull') { @simplenote.pull }
         @note.reload.updated_at.should == updated_at_before
       end
     end
@@ -67,7 +67,7 @@ describe SimplenoteMediator do
       end
 
       it 'creates the note' do
-        expect { VCR.use_cassette('simplenote_pull') { @simplenote.pull } }.to change { Note.find_by_simplenote_key(@new_key).present? }.from(false).to(true)
+        expect { VCR.use_cassette('simplenote/pull') { @simplenote.pull } }.to change { Note.find_by_simplenote_key(@new_key).present? }.from(false).to(true)
       end
     end
 
@@ -78,7 +78,7 @@ describe SimplenoteMediator do
         @simplenote.notes_to_push << @note
       end
       it "should remove the note from the push queue" do
-        VCR.use_cassette('simplenote_pull') { @simplenote.pull }
+        VCR.use_cassette('simplenote/pull') { @simplenote.pull }
         @simplenote.notes_to_push.should_not include @note
 
       end
