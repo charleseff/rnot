@@ -19,7 +19,7 @@ RSpec.configure do |config|
 end
 
 VCR.config do |c|
-  c.cassette_library_dir = 'fixtures/vcr_cassettes'
+  c.cassette_library_dir = File.join(File.expand_path('..', __FILE__), 'fixtures', 'vcr_cassettes')
   c.stub_with :fakeweb
-  c.default_cassette_options = {:record => :none}
+  c.default_cassette_options = {:record => :once}
 end

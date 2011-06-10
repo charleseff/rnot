@@ -1,0 +1,285 @@
+--- 
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :post
+    uri: https://simple-note.appspot.com:443/api/login
+    body: |
+      ZW1haWw9Y2hhcmxlcy5maW5rZWwlMkJ0ZXN0JTQwZ21haWwuY29tJnBhc3N3
+      b3JkPWp1c3R0ZXN0aW5n
+
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      set-cookie: 
+      - auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0; expires=Fri, 24-Jun-2011 23:08:01 GMT
+      - email=charles.finkel+test@gmail.com; expires=Fri, 24-Jun-2011 23:08:01 GMT
+      account-type: 
+      - "000"
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 23:08:01 GMT
+      server: 
+      - Google Frontend
+    body: 8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/index?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com&length=2
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 23:08:02 GMT
+      server: 
+      - Google Frontend
+    body: "{\"count\":2,\"data\":[{\"modifydate\": \"1307745446.738366\", \"tags\": [], \"deleted\": 0, \"createdate\": \"1307141845.890000\", \"systemtags\": [], \"version\": 6, \"syncnum\": 6, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjduukIDA\", \"minversion\": 1}, {\"modifydate\": \"1307156250.604000\", \"tags\": [], \"deleted\": 0, \"createdate\": \"1307156245.551000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 1, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRisgdcIDA\", \"minversion\": 1}],\"time\":\"1307747282.653570\",\"mark\":\"agtzaW1wbGUtbm90ZXINCxIETm90ZRjay-cIDA\"}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/index?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com&length=2&mark=agtzaW1wbGUtbm90ZXINCxIETm90ZRjay-cIDA
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 23:08:04 GMT
+      server: 
+      - Google Frontend
+    body: "{\"count\":2,\"data\":[{\"modifydate\": \"1307141386.000000\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1307141382.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjay-cIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141361.294811\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305085606.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiJvucIDA\", \"minversion\": 1}],\"time\":\"1307747283.721667\",\"mark\":\"agtzaW1wbGUtbm90ZXINCxIETm90ZRiTjukIDA\"}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/index?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com&length=2&mark=agtzaW1wbGUtbm90ZXINCxIETm90ZRiTjukIDA
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 23:08:04 GMT
+      server: 
+      - Google Frontend
+    body: "{\"count\":2,\"data\":[{\"modifydate\": \"1307141361.092121\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1307138296.693161\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiTjukIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141360.833242\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1306882117.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjDpuIIDA\", \"minversion\": 1}],\"time\":\"1307747284.939669\",\"mark\":\"agtzaW1wbGUtbm90ZXINCxIETm90ZRiIvucIDA\"}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/index?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com&length=2&mark=agtzaW1wbGUtbm90ZXINCxIETm90ZRiIvucIDA
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 23:08:05 GMT
+      server: 
+      - Google Frontend
+    body: "{\"count\":2,\"data\":[{\"modifydate\": \"1307141360.617395\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1306883629.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiIvucIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141360.427956\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1306883670.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiJk94IDA\", \"minversion\": 1}],\"time\":\"1307747285.935670\",\"mark\":\"agtzaW1wbGUtbm90ZXINCxIETm90ZRjJq-kIDA\"}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/index?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com&length=2&mark=agtzaW1wbGUtbm90ZXINCxIETm90ZRjJq-kIDA
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 23:08:07 GMT
+      server: 
+      - Google Frontend
+    body: "{\"count\":2,\"data\":[{\"modifydate\": \"1307141360.234557\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305923372.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjJq-kIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141359.998342\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305085174.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRi7lekIDA\", \"minversion\": 1}],\"time\":\"1307747286.875908\",\"mark\":\"agtzaW1wbGUtbm90ZXINCxIETm90ZRiv0ukIDA\"}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/index?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com&length=2&mark=agtzaW1wbGUtbm90ZXINCxIETm90ZRiv0ukIDA
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 23:08:08 GMT
+      server: 
+      - Google Frontend
+    body: "{\"count\":2,\"data\":[{\"modifydate\": \"1307141359.759453\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305085596.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiv0ukIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141359.392222\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1306885063.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiS4OYIDA\", \"minversion\": 1}],\"time\":\"1307747288.199950\",\"mark\":\"agtzaW1wbGUtbm90ZXINCxIETm90ZRjqjeUIDA\"}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/index?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com&length=2&mark=agtzaW1wbGUtbm90ZXINCxIETm90ZRjqjeUIDA
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 23:08:09 GMT
+      server: 
+      - Google Frontend
+    body: "{\"count\":2,\"data\":[{\"modifydate\": \"1307141359.197081\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1306884280.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjqjeUIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141358.982741\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305085174.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjBlOMIDA\", \"minversion\": 1}],\"time\":\"1307747289.363078\",\"mark\":\"agtzaW1wbGUtbm90ZXINCxIETm90ZRjC4uMIDA\"}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/index?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com&length=2&mark=agtzaW1wbGUtbm90ZXINCxIETm90ZRjC4uMIDA
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 23:08:10 GMT
+      server: 
+      - Google Frontend
+    body: "{\"count\":2,\"data\":[{\"modifydate\": \"1307141358.789045\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1307139015.179032\", \"systemtags\": [], \"version\": 2, \"syncnum\": 3, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjC4uMIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141358.577555\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305916529.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiYjukIDA\", \"minversion\": 1}],\"time\":\"1307747290.663917\",\"mark\":\"agtzaW1wbGUtbm90ZXINCxIETm90ZRj1gOQIDA\"}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/index?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com&length=2&mark=agtzaW1wbGUtbm90ZXINCxIETm90ZRj1gOQIDA
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 23:08:11 GMT
+      server: 
+      - Google Frontend
+    body: "{\"count\":2,\"data\":[{\"modifydate\": \"1307141358.367819\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1306884253.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRj1gOQIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141357.803543\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305085174.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjAl-gIDA\", \"minversion\": 1}],\"time\":\"1307747291.802049\",\"mark\":\"agtzaW1wbGUtbm90ZXINCxIETm90ZRjm1-MIDA\"}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/index?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com&length=2&mark=agtzaW1wbGUtbm90ZXINCxIETm90ZRjm1-MIDA
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 23:08:13 GMT
+      server: 
+      - Google Frontend
+    body: "{\"count\":2,\"data\":[{\"modifydate\": \"1307141357.625895\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305085174.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjm1-MIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141357.441434\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305482723.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjs7uQIDA\", \"minversion\": 1}],\"time\":\"1307747293.283732\",\"mark\":\"agtzaW1wbGUtbm90ZXINCxIETm90ZRjtoOEIDA\"}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/index?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com&length=2&mark=agtzaW1wbGUtbm90ZXINCxIETm90ZRjtoOEIDA
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 23:08:15 GMT
+      server: 
+      - Google Frontend
+    body: "{\"count\":2,\"data\":[{\"modifydate\": \"1307141357.195663\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305483180.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjtoOEIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141356.991751\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1306883640.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRidrOMIDA\", \"minversion\": 1}],\"time\":\"1307747295.462996\"}"
+    http_version: "1.1"

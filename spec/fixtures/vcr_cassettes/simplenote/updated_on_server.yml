@@ -1,0 +1,515 @@
+--- 
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :post
+    uri: https://simple-note.appspot.com:443/api/login
+    body: |
+      ZW1haWw9Y2hhcmxlcy5maW5rZWwlMkJ0ZXN0JTQwZ21haWwuY29tJnBhc3N3
+      b3JkPWp1c3R0ZXN0aW5n
+
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      set-cookie: 
+      - auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0; expires=Fri, 24-Jun-2011 03:44:40 GMT
+      - email=charles.finkel+test@gmail.com; expires=Fri, 24-Jun-2011 03:44:40 GMT
+      account-type: 
+      - "000"
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 03:44:40 GMT
+      server: 
+      - Google Frontend
+    body: 8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/index?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 03:44:40 GMT
+      server: 
+      - Google Frontend
+    body: "{\"count\":20,\"data\":[{\"modifydate\": \"1307397551.247777\", \"tags\": [], \"deleted\": 0, \"createdate\": \"1307141845.890000\", \"systemtags\": [], \"version\": 5, \"syncnum\": 5, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjduukIDA\", \"minversion\": 1}, {\"modifydate\": \"1307156250.604000\", \"tags\": [], \"deleted\": 0, \"createdate\": \"1307156245.551000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 1, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRisgdcIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141386.000000\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1307141382.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjay-cIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141361.294811\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305085606.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiJvucIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141361.092121\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1307138296.693161\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiTjukIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141360.833242\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1306882117.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjDpuIIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141360.617395\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1306883629.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiIvucIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141360.427956\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1306883670.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiJk94IDA\", \"minversion\": 1}, {\"modifydate\": \"1307141360.234557\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305923372.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjJq-kIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141359.998342\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305085174.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRi7lekIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141359.759453\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305085596.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiv0ukIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141359.392222\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1306885063.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiS4OYIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141359.197081\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1306884280.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjqjeUIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141358.982741\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305085174.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjBlOMIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141358.789045\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1307139015.179032\", \"systemtags\": [], \"version\": 2, \"syncnum\": 3, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjC4uMIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141358.577555\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305916529.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiYjukIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141358.367819\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1306884253.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRj1gOQIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141357.803543\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305085174.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjAl-gIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141357.625895\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305085174.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjm1-MIDA\", \"minversion\": 1}, {\"modifydate\": \"1307141357.441434\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305482723.000000\", \"systemtags\": [], \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjs7uQIDA\", \"minversion\": 1}],\"time\":\"1307677480.805548\",\"mark\":\"agtzaW1wbGUtbm90ZXINCxIETm90ZRjtoOEIDA\"}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/data/agtzaW1wbGUtbm90ZXINCxIETm90ZRjduukIDA?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 03:44:41 GMT
+      server: 
+      - Google Frontend
+    body: "{\"modifydate\": \"1307397551.247777\", \"tags\": [], \"deleted\": 0, \"createdate\": \"1307141845.890000\", \"systemtags\": [], \"content\": \"tha title\\n\\nsome ish\", \"version\": 5, \"syncnum\": 5, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjduukIDA\", \"minversion\": 1}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/data/agtzaW1wbGUtbm90ZXINCxIETm90ZRisgdcIDA?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 03:44:42 GMT
+      server: 
+      - Google Frontend
+    body: "{\"modifydate\": \"1307156250.604000\", \"tags\": [], \"deleted\": 0, \"createdate\": \"1307156245.551000\", \"systemtags\": [], \"content\": \"third \\n\\nthis is the third note, boy\", \"version\": 1, \"syncnum\": 1, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRisgdcIDA\", \"minversion\": 1}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/data/agtzaW1wbGUtbm90ZXINCxIETm90ZRjay-cIDA?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 03:44:42 GMT
+      server: 
+      - Google Frontend
+    body: "{\"modifydate\": \"1307141386.000000\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1307141382.000000\", \"systemtags\": [], \"content\": \"first\\n\\nsome ish\\n\", \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjay-cIDA\", \"minversion\": 1}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/data/agtzaW1wbGUtbm90ZXINCxIETm90ZRiJvucIDA?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 03:44:43 GMT
+      server: 
+      - Google Frontend
+    body: "{\"modifydate\": \"1307141361.294811\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305085606.000000\", \"systemtags\": [], \"content\": \"more ish\\n\\nstuff\", \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiJvucIDA\", \"minversion\": 1}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/data/agtzaW1wbGUtbm90ZXINCxIETm90ZRiTjukIDA?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 03:44:43 GMT
+      server: 
+      - Google Frontend
+    body: "{\"modifydate\": \"1307141361.092121\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1307138296.693161\", \"systemtags\": [], \"content\": \"Getting the most out of Simplenote\\n\\nThanks for signing up!\\n\\nAfter you look around a little, click the Downloads link at the bottom of this page. That's where you can download Simplenote for your device and your computer. Or you can just use this web app if you want. It's up to you.\\n\\nHere are some ideas for how to use Simplenote:\\n\\n- to do lists and reminders\\n- a grocery list that you share with your family\\n- notes from a meeting or a class\\n- a draft for a blog post\\n- brainstorming\\n- keeping a journal\\n- lists of movies, restaurants, or books\\n- any kind of text\\n\\nEnjoy!\", \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiTjukIDA\", \"minversion\": 1}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/data/agtzaW1wbGUtbm90ZXINCxIETm90ZRjDpuIIDA?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 03:44:44 GMT
+      server: 
+      - Google Frontend
+    body: "{\"modifydate\": \"1307141360.833242\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1306882117.000000\", \"systemtags\": [], \"content\": \"wayy\\n\\nyeah wayyy\", \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjDpuIIDA\", \"minversion\": 1}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/data/agtzaW1wbGUtbm90ZXINCxIETm90ZRiIvucIDA?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 03:44:44 GMT
+      server: 
+      - Google Frontend
+    body: "{\"modifydate\": \"1307141360.617395\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1306883629.000000\", \"systemtags\": [], \"content\": \"weofij\\n\\n\", \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiIvucIDA\", \"minversion\": 1}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/data/agtzaW1wbGUtbm90ZXINCxIETm90ZRiJk94IDA?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 03:44:45 GMT
+      server: 
+      - Google Frontend
+    body: "{\"modifydate\": \"1307141360.427956\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1306883670.000000\", \"systemtags\": [], \"content\": \"How does this thing do?\\n\\nyeah i dunno\", \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiJk94IDA\", \"minversion\": 1}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/data/agtzaW1wbGUtbm90ZXINCxIETm90ZRjJq-kIDA?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 03:44:45 GMT
+      server: 
+      - Google Frontend
+    body: "{\"modifydate\": \"1307141360.234557\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305923372.000000\", \"systemtags\": [], \"content\": \"more ish two\\n\\n ish\\n more stuff\\n \\n weoifj\", \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjJq-kIDA\", \"minversion\": 1}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/data/agtzaW1wbGUtbm90ZXINCxIETm90ZRi7lekIDA?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 03:44:46 GMT
+      server: 
+      - Google Frontend
+    body: "{\"modifydate\": \"1307141359.998342\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305085174.000000\", \"systemtags\": [], \"content\": \"How does this thing work?\\n\\nAlways begin typing in the upper search area. Press return to add a new note with that title. While you type, NV searches for notes whose body or title contain your words. Observe that naming a note and searching always occur simultaneously.\\n\\nWhen you select one of the found notes (e.g., using the up/down keys) NV displays its body in the lower text area (what you're reading now).\\n\\nIf you had typed the beginning of a note's title, NV would have selected that note automatically.\\n\\nTo create another note, just start typing in the search area again (press \\u2318-L to get there from the Keyboard). Don't worry, you won't rename your note--for that you'll either need to double-click its title in the list of notes or press \\u2318-R.\\n\\nBut NV won't let me save my changes!\\nNV constantly writes your changes to disk as you create and edit notes, so there's no need to \\\"Save\\\" anything manually.\\n\", \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRi7lekIDA\", \"minversion\": 1}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/data/agtzaW1wbGUtbm90ZXINCxIETm90ZRiv0ukIDA?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 03:44:46 GMT
+      server: 
+      - Google Frontend
+    body: "{\"modifydate\": \"1307141359.759453\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305085596.000000\", \"systemtags\": [], \"content\": \"food bar\\n\\nyeah food bar is stuff cooo\\n\\nyeah\", \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiv0ukIDA\", \"minversion\": 1}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/data/agtzaW1wbGUtbm90ZXINCxIETm90ZRiS4OYIDA?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 03:44:47 GMT
+      server: 
+      - Google Frontend
+    body: "{\"modifydate\": \"1307141359.392222\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1306885063.000000\", \"systemtags\": [], \"content\": \"sweet\\n\\n\", \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiS4OYIDA\", \"minversion\": 1}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/data/agtzaW1wbGUtbm90ZXINCxIETm90ZRjqjeUIDA?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 03:44:47 GMT
+      server: 
+      - Google Frontend
+    body: "{\"modifydate\": \"1307141359.197081\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1306884280.000000\", \"systemtags\": [], \"content\": \"booyeah\\n\\nso sweet\", \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjqjeUIDA\", \"minversion\": 1}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/data/agtzaW1wbGUtbm90ZXINCxIETm90ZRjBlOMIDA?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 03:44:48 GMT
+      server: 
+      - Google Frontend
+    body: "{\"modifydate\": \"1307141358.982741\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305085174.000000\", \"systemtags\": [], \"content\": \"Contact Information\\n\\nHomepage:\\n    http://www.notational.net/\\n\\nDevelopment:\\n    https://github.com/scrod/nv/wiki/\\n\\nContact:\\n    Zachary Schneirov <scrod@notational.net>\", \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjBlOMIDA\", \"minversion\": 1}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/data/agtzaW1wbGUtbm90ZXINCxIETm90ZRjC4uMIDA?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 03:44:48 GMT
+      server: 
+      - Google Frontend
+    body: "{\"modifydate\": \"1307141358.789045\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1307139015.179032\", \"systemtags\": [], \"content\": \"stuff\\nsome stuff in the note, foo\", \"version\": 2, \"syncnum\": 3, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjC4uMIDA\", \"minversion\": 1}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/data/agtzaW1wbGUtbm90ZXINCxIETm90ZRiYjukIDA?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 03:44:49 GMT
+      server: 
+      - Google Frontend
+    body: "{\"modifydate\": \"1307141358.577555\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305916529.000000\", \"systemtags\": [], \"content\": \"weoi- ? blah\\n\\nish but better\", \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRiYjukIDA\", \"minversion\": 1}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/data/agtzaW1wbGUtbm90ZXINCxIETm90ZRj1gOQIDA?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 03:44:50 GMT
+      server: 
+      - Google Frontend
+    body: "{\"modifydate\": \"1307141358.367819\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1306884253.000000\", \"systemtags\": [], \"content\": \"thangsss\\n\\n        oh yeah booyeah\", \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRj1gOQIDA\", \"minversion\": 1}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/data/agtzaW1wbGUtbm90ZXINCxIETm90ZRjAl-gIDA?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 03:44:50 GMT
+      server: 
+      - Google Frontend
+    body: "{\"modifydate\": \"1307141357.803543\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305085174.000000\", \"systemtags\": [], \"content\": \"This is the title of a note\\n\\nWelcome to Notational Velocity!\\n\\nThis is the body of a note. Your notes can be as long or as short as you want, and you can embolden, italicize, or strike them.\\n\\nCreate links between notes: [[How does this thing work?]].\\n\\nYou can create as many notes as you want--NV can hold thousands of them and works best when content is distributed.\\n\\nIf you enable encryption (Preferences > Notes > Security) you can even store passwords and other sensitive information without giving a second thought to computer forensics laboratories.\\n\\nThese notes were included to get you started with Notational Velocity. You may delete them at any time.\", \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjAl-gIDA\", \"minversion\": 1}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/data/agtzaW1wbGUtbm90ZXINCxIETm90ZRjm1-MIDA?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 03:44:51 GMT
+      server: 
+      - Google Frontend
+    body: "{\"modifydate\": \"1307141357.625895\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305085174.000000\", \"systemtags\": [], \"content\": \"Excruciatingly Useful Shortcuts\\n\\nIn the order of most to least useful:\\n\\n\\u2318 L     Place insertion point in search/title area\\nEscape  Clear current search\\nReturn  Begin editing note, creating it if necessary\\nTab     Move insertion point between text areas\\n\\u2318 K     Select previous note in list\\n\\u2318 J     Select next note in list\\n\\u2318 D     De-select current note, restoring the search text\\n\\u2318 \\u21e7 V   Paste clipboard as a new note\\n\\u2318 R     Rename the selected note\\n\\u2318 \\u232b Delete the selected note(s)\\n\\u2318 \\u21e7 T   Tag the selected note\\n\\u2318 G     Find next occurrence of search text\\n\\u2318 \\u21e7 G   Find previous occurrence of search text\\n\\u2318 \\u21a9     Open any URL under the insertion point\\n\\u2318 \\u2190     Move to title-editing when at start of the note-body\\n\\u2318 \\u2192     Move to the note-body when at the end of a title\\n\\u2318 \\u21e7 D   Bookmark the selected note\\n\\u2318 P     Print the selected note(s)\\n\\u2318 E     Export the selected note(s) to other formats\\n\\nText formatting shortcuts:\\n\\n\\u2318 [     (left square bracket) Outdent one or more lines\\n\\u2318 ]     (right square bracket) Indent one or more lines\\n\\u2325 Tab   Indent\\n\\u2318 T     Make text plain; remove styles\\n\\u2318 B     Embolden\\n\\u2318 I     Italicize\\n\\u2318 Y     Strikethrough\\n\", \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjm1-MIDA\", \"minversion\": 1}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/data/agtzaW1wbGUtbm90ZXINCxIETm90ZRjs7uQIDA?auth=8647A79B260A2E349ED6C24398B678CE25E334C0A1EA4CB04C62011B910D55C0&email=charles.finkel%2Btest%40gmail.com
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Fri, 10 Jun 2011 03:44:51 GMT
+      server: 
+      - Google Frontend
+    body: "{\"modifydate\": \"1307141357.441434\", \"tags\": [], \"deleted\": 1, \"createdate\": \"1305482723.000000\", \"systemtags\": [], \"content\": \"weoi: ? blah\\n\\nsome ish\\n\\n- food\\n  - more ish, son\", \"version\": 1, \"syncnum\": 2, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjs7uQIDA\", \"minversion\": 1}"
+    http_version: "1.1"

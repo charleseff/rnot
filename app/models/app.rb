@@ -18,7 +18,7 @@ class App
 
   def self.database_path
     @database_path ||= lambda do
-      if ENV["RNOT_ENV"] == 'production'
+      if ['production','console'].include? ENV["RNOT_ENV"]   
         File.join(notes_dir, 'rnot.sqlite3')
       else
         File.join(notes_dir, 'rnot.test.sqlite3')
