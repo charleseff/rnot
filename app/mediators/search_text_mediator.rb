@@ -28,7 +28,7 @@ module SearchTextMediator
         treeview.grab_focus
       elsif [65421, 65293].include? event_key.keyval # return and keyboard return
         if !treeview.selection.selected.present?
-          @open_note = Note.create!(:title => @search_text, :body => '')
+          @open_note = Note.create!(:title => @search_text, :body => '', :modified_locally => true)
 
           iter = notes_list_store.append
           notes_list_store.set_value(iter, App::TITLE, @open_note.title)

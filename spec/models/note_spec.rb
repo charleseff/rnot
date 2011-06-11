@@ -12,4 +12,20 @@ describe Note do
       end
     end
   end
+
+  context "named_scopes" do
+
+    describe "#modified_locally" do
+      it "scopes to notes that are modified locally" do
+        Factory(:note, :modified_locally => false)
+        Factory(:note, :modified_locally => true)
+
+        should_be_a_subset(Note.all, Note.modified_locally) do |note|
+          note.modified_locally == true
+        end
+      end
+    end
+
+  end
+
 end

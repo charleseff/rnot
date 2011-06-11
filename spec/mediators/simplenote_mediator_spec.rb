@@ -71,16 +71,13 @@ describe SimplenoteMediator do
       end
     end
 
-    context "local note is on the push queue that also has an update from the server" do
+    context "local note is modified locally and also has an update from the server" do
       before do
         @updated_key = 'agtzaW1wbGUtbm90ZXINCxIETm90ZRjduukIDA'
-        @note = Factory(:note, :simplenote_key => @updated_key, :simplenote_syncnum => 1, :body => 'some ish', :updated_at => Time.now-1.day, :created_at => Time.now-1.day)
-        @simplenote.notes_to_push << @note
+        @note = Factory(:note, :simplenote_key => @updated_key, :simplenote_syncnum => 1, :body => 'some ish', :updated_at => Time.now-1.day, :created_at => Time.now-1.day, :modified_locally => true)
       end
-      it "should remove the note from the push queue" do
-        VCR.use_cassette('simplenote/pull') { @simplenote.pull }
-        @simplenote.notes_to_push.should_not include @note
-
+      it "should mark the note as not modified locally" do
+        expect { VCR.use_cassette('simplenote/pull') { @simplenote.pull } }.to change { @note.reload.modified_locally? }.from(true).to(false)
       end
 
     end
@@ -88,28 +85,26 @@ describe SimplenoteMediator do
 
   describe '#push' do
 
-    context 'note exists on local queue that exists on server' do
+    context 'note is modified locally that exists on server' do
       before do
         @updated_key = 'agtzaW1wbGUtbm90ZXINCxIETm90ZRjduukIDA'
-        @note = Factory(:note, :simplenote_key => @updated_key, :simplenote_syncnum => 1, :body => 'some ish', :updated_at => Time.now-1.day, :created_at => Time.now-1.day, :title => 'tha title')
-        @simplenote.notes_to_push << @note
+        @note = Factory(:note, :simplenote_key => @updated_key, :simplenote_syncnum => 1, :body => 'some ish',
+                        :updated_at => Time.now-1.day, :created_at => Time.now-1.day, :title => 'tha title', :modified_locally => true)
       end
       it "updates note's server syncnum" do
         before_syncnum = @note.reload.simplenote_syncnum
         VCR.use_cassette('simplenote/push') { @simplenote.push }
         @note.reload.simplenote_syncnum.should > before_syncnum
       end
-      it 'removes note from the queue' do
-        @simplenote.notes_to_push.should include @note
-        VCR.use_cassette('simplenote/push') { @simplenote.push }
-        @simplenote.notes_to_push.should_not include @note
+      it 'sets the note as not modified locally' do
+        expect { VCR.use_cassette('simplenote/push') { @simplenote.push } }.to change { @note.reload.modified_locally? }.from(true).to(false)
       end
     end
 
-    context 'notes on the local queue are new' do
+    context 'note modified locally is new' do
       before do
-        @note = Factory(:note, :body => 'the real body', :updated_at => Time.now-1.day, :created_at => Time.now-1.day, :title => 'tha real title')
-        @simplenote.notes_to_push << @note
+        @note = Factory(:note, :body => 'the real body', :updated_at => Time.now-1.day, :created_at => Time.now-1.day,
+                        :title => 'tha real title', :modified_locally=>true)
       end
       it 'updates local note with server key' do
         expect { VCR.use_cassette('simplenote/push_new') { @simplenote.push } }.to change { @note.reload.simplenote_key.present? }.from(false).to(true)
@@ -117,9 +112,8 @@ describe SimplenoteMediator do
       it 'updates local note with syncnum' do
         expect { VCR.use_cassette('simplenote/push_new') { @simplenote.push } }.to change { @note.reload.simplenote_syncnum.present? }.from(false).to(true)
       end
-      it 'removes note from the queue' do
-        VCR.use_cassette('simplenote/push_new') { @simplenote.push }
-        @simplenote.notes_to_push.should_not include @note
+      it 'sets modified locally to false' do
+        expect { VCR.use_cassette('simplenote/push_new') { @simplenote.push } }.to change { @note.reload.modified_locally? }.from(true).to(false)
       end
       it 'adds note to the server' do
         VCR.use_cassette('simplenote/push_new_ands_to_index') do
@@ -128,10 +122,6 @@ describe SimplenoteMediator do
         end
       end
     end
-  end
-
-  describe '#setup_push_queue' do
-    it 'adds all local notes to be pushed to the push queue'
   end
 
   describe "#parse_title and #parse_body" do

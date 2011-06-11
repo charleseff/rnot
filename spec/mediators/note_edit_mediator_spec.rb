@@ -22,6 +22,9 @@ describe NoteEditMediator do
       it "changes the modified value in the notes list" do
            expect { @app.save_note_if_open_and_changed }.to change { @iter[App::MODIFIED] }
       end
+      it "set modified_locally to true" do
+        expect { @app.save_note_if_open_and_changed }.to change { @note.reload.modified_locally }.from(false).to(true)
+      end
     end
   end
 

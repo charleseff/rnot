@@ -20,6 +20,25 @@ describe SearchTextMediator do
       end
     end
 
+    describe "key-press-event" do
+      before do
+        @app.treeview.selection.selected == nil
+        @app.search_text = 'foobar'
+
+        @event_key = Gdk::EventKey.new(Gdk::Event::KEY_PRESS)
+        @event_key.keyval =65421
+
+      end
+      it "creates a new note when there is no selected value in the note-list view" do
+        expect { @app.search_text_entry.signal_emit("key-press-event", @event_key) }.to change { Note.count }.by(1)
+      end
+
+      it "create a new note with modified_locally set to true" do
+        @app.search_text_entry.signal_emit("key-press-event", @event_key)
+        Note.last.modified_locally.should be_true
+      end
+    end
+
   end
 
 end
