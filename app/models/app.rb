@@ -11,14 +11,27 @@ class App
     setup_directories
     setup_database
     setup_window
-    @simplenote = SimplenoteMediator.new if internet_connection?
-#    create_global_accel_keys_and_menus
+    @simplenote = SimplenoteMediator.new(self) if internet_connection?
+
+    setup_simplenote_timer if ENV["RNOT_ENV"] == 'production' && simplenote_enabled?
     refresh_notes
+  end
+
+  def setup_simplenote_timer
+    Thread.abort_on_exception = true
+    @simplenote_thread = Thread.new do
+      while (true) do
+        puts "Simplenote syncing"
+        @simplenote.sync
+        sleep(60)
+      end
+    end
+
   end
 
   def self.database_path
     @database_path ||= lambda do
-      if ['production','console'].include? ENV["RNOT_ENV"]   
+      if ['production', 'console'].include? ENV["RNOT_ENV"]
         File.join(notes_dir, 'rnot.sqlite3')
       else
         File.join(notes_dir, 'rnot.test.sqlite3')
@@ -41,6 +54,9 @@ class App
     Ping.pingecho "google.com", 1, 80
   end
 
+  def simplenote_enabled?
+    true
+  end
 
   private
   def setup_database

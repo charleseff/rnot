@@ -2,23 +2,30 @@ class SimplenoteMediator
 
   attr_accessor :simplenote
 
-  def initialize
+  def initialize(app)
+    @app = app
     @simplenote = SimpleNoteApi2.new(login, password)
     @simplenote
   end
 
   # always overwrite local changes with server changes
   def pull
-    note_hashes = get_note_hashes
+    note_hashes = get_note_hashes(:length=>100)
 
     note_hashes.each do |note_hash|
-      if note_hash['deleted'] == 1 && note=Note.find_by_simplenote_key(note_hash['key'])
-        note.destroy
+      if note_hash['deleted'] == 1
+        if note=Note.find_by_simplenote_key(note_hash['key'])
+          note.destroy 
+        end
       else
         note=Note.find_by_simplenote_key(note_hash['key'])
         if note.blank?
           simplenote_body = simplenote.get_note(note_hash['key'])['content']
-          Note.create!(:title => parse_title(simplenote_body), :body => parse_body(simplenote_body), :simplenote_syncnum => note_hash['syncnum'], :simplenote_key => note_hash['key'])
+          title = parse_title(simplenote_body)
+
+          note.destroy  if note=Note.find_by_title(title)
+
+          Note.create!(:title => title, :body => parse_body(simplenote_body), :simplenote_syncnum => note_hash['syncnum'], :simplenote_key => note_hash['key'])
         elsif note.simplenote_syncnum < note_hash['syncnum']
           note_response = simplenote.get_note(note_hash['key'])
           note.update_attributes(:title => parse_title(note_response['content']), :body => parse_body(note_response['content']),

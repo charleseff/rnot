@@ -1,7 +1,10 @@
 require 'spec_helper'
 
 describe SimplenoteMediator do
-  before { @simplenote = SimplenoteMediator.new }
+  before do
+    @app = App.new
+    @simplenote = @app.simplenote
+  end
 
   describe '#get_note_hashes' do
     it 'gets all note hashes even if it has to call for the index more than once' do
@@ -11,6 +14,13 @@ describe SimplenoteMediator do
   end
 
   describe '#pull' do
+
+    context 'local note not present that is deleted on the server' do
+      it 'does not create the note' do
+        @deleted_key = 'agtzaW1wbGUtbm90ZXINCxIETm90ZRjay-cIDA'
+        expect { VCR.use_cassette('simplenote/pull', :record => :none) { @simplenote.pull } }.to_not change { Note.find_by_simplenote_key(@deleted_key).present? }
+      end
+    end
 
     context 'local note present that is deleted on the server' do
       before do
@@ -67,10 +77,24 @@ describe SimplenoteMediator do
         @new_key = 'agtzaW1wbGUtbm90ZXINCxIETm90ZRisgdcIDA'
       end
 
-      it 'creates the note' do
+      it 'creates a new note note' do
         expect { VCR.use_cassette('simplenote/pull') { @simplenote.pull } }.to change { Note.find_by_simplenote_key(@new_key).present? }.from(false).to(true)
       end
       it "adds note to the notes list gui"
+
+      context "another note exists locally with the same title" do
+        before do
+          @note = Factory(:note, :title => 'third', :modified_locally => true)
+        end
+        it "deletes that note" do
+          VCR.use_cassette('simplenote/pull') { @simplenote.pull }
+          lambda { @note.reload }.should raise_error ActiveRecord::RecordNotFound
+        end
+
+        it "creates a new note" do
+          expect { VCR.use_cassette('simplenote/pull') { @simplenote.pull } }.to change { Note.find_by_simplenote_key(@new_key).present? }.from(false).to(true)
+        end
+      end
 
     end
 

@@ -28,4 +28,8 @@ describe App do
     end
   end
 
+  describe "#simplenote_enabled?" do
+    it "returns true if config is set"
+    it "returns false if config is not set"
+  end
 end
