@@ -45,6 +45,7 @@ describe SimplenoteMediator do
         VCR.use_cassette('simplenote/pull') { @simplenote.pull }
         @note.reload.updated_at.should > updated_at_before
       end
+      it "updates modified value in the notes list gui"
     end
 
     context 'local note present that is not updated on the server' do
@@ -69,6 +70,8 @@ describe SimplenoteMediator do
       it 'creates the note' do
         expect { VCR.use_cassette('simplenote/pull') { @simplenote.pull } }.to change { Note.find_by_simplenote_key(@new_key).present? }.from(false).to(true)
       end
+      it "adds note to the notes list gui"
+
     end
 
     context "local note is modified locally and also has an update from the server" do
