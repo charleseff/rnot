@@ -29,4 +29,16 @@ describe SearchTextMediator do
     end
   end
 
+  describe '#refresh_notes' do
+    context "refresh_notes doesn't remove note" do
+      it 'should keep iter selected on treeview after called' do
+        @app.refresh_notes
+        @app.treeview.selection.select_iter @app.notes_list_store.get_iter('0')
+        @app.treeview.selection.selected.should be_present
+
+        expect { @app.refresh_notes }.to_not change { @app.treeview.selection.selected.present? }
+      end
+    end
+  end
+
 end

@@ -21,6 +21,33 @@ module NotesListMediator
     scrolled_win
   end
 
+  def refresh_notes(notes = Note.all, selected_note = nil)
+    notes_to_add = notes.clone
+
+    iters_to_remove = []
+    notes_list_store.each do |model, path, iter|
+      if note=notes_to_add.detect { |n| n.id == iter[App::ID] }
+        notes_to_add.delete(note)
+      else
+        iters_to_remove << iter
+      end
+    end
+    iters_to_remove.each { |iter| notes_list_store.remove(iter) }
+
+    notes_to_add.each do |note|
+      iter = notes_list_store.append
+      notes_list_store.set_value(iter, TITLE, note.title)
+      notes_list_store.set_value(iter, MODIFIED, note.updated_at.to_s)
+      notes_list_store.set_value(iter, ID, note.id)
+      if selected_note == note
+        treeview.selection.select_iter iter
+        @open_note = Note.find(treeview.selection.selected[App::ID])
+        text_edit_view.buffer.text = @open_note.body
+      end
+    end
+
+  end
+
   private
   def setup_tree_view(treeview)
     renderer = CellRendererText.new
@@ -51,25 +78,5 @@ module NotesListMediator
 
     end
   end
-
-  def refresh_notes(notes = Note.all, selected_note = nil)
-    notes_list_store.clear
-    notes.each do |note|
-      iter = notes_list_store.append
-      notes_list_store.set_value(iter, TITLE, note.title)
-      notes_list_store.set_value(iter, MODIFIED, note.updated_at.to_s)
-      notes_list_store.set_value(iter, ID, note.id)
-      if selected_note == note
-        treeview.selection.select_iter iter
-        @open_note = Note.find(treeview.selection.selected[App::ID])
-        text_edit_view.buffer.text = @open_note.body
-      end
-    end
-
-  end
-
-  def handle_notes_list_cursor_change(treeview)
-  end
-
 
 end
