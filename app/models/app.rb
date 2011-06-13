@@ -111,11 +111,11 @@ class App
     notes_list_scrolled_window = create_notes_list_scrolled_window
 
     @paned = VPaned.new
-    @paned.add1(notes_list_scrolled_window)
-    @paned.add2(text_edit_scrolled_window)
+    @paned.pack1(notes_list_scrolled_window, true, true)
+    @paned.pack2(text_edit_scrolled_window, true, true)
 
     box1.pack_start(@paned, true, true, 0)
-    @paned.position = @paned.max_position/2
+    @paned.position = @paned.max_position * 0.5
 
     @window.add(box1)
 

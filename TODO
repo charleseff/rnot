@@ -1,5 +1,4 @@
 - Feature todos:
-  - hook on selection change
   - deletion
   - properly refresh notes.  properly handle modified times
   - Ctrl-F on text view
