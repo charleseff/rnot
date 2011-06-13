@@ -1,4 +1,5 @@
 class Note < ActiveRecord::Base
+  acts_as_paranoid
   scope :modified_locally, {:conditions => {:modified_locally => true}}
 
   def to_simplenote_content

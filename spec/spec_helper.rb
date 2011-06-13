@@ -18,6 +18,8 @@ RSpec.configure do |config|
   end
 end
 
+ActiveRecord::Base.establish_connection(App.database_config)
+
 VCR.config do |c|
   c.cassette_library_dir = File.join(File.expand_path('..', __FILE__), 'fixtures', 'vcr_cassettes')
   c.stub_with :fakeweb

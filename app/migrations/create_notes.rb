@@ -7,6 +7,7 @@ class CreateNotes < ActiveRecord::Migration
       t.integer :simplenote_syncnum
       t.boolean :modified_locally, :default => false
       t.datetime :modified_at
+      t.datetime :deleted_at
       
       t.timestamps
     end

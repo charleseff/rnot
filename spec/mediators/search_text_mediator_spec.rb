@@ -11,7 +11,7 @@ describe SearchTextMediator do
         @app.search_text_entry.text = 'blady'
 
         expect { @app.search_text_entry.signal_emit("key-release-event", nil) }.
-            to change { @app.search_text }.from(nil).to('blady')
+            to change { @app.last_searched_text }.from(nil).to('blady')
       end
 
       it 'should clear the open note' do

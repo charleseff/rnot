@@ -99,6 +99,10 @@ describe SimplenoteMediator do
         expect { VCR.use_cassette('simplenote/pull') { @simplenote.pull } }.to change { @note.reload.modified_locally? }.from(true).to(false)
       end
 
+      context "local note is marked as deleted locally" do
+        it "should mark the note as not deleted"
+      end
+
     end
   end
 

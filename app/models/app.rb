@@ -11,7 +11,7 @@ class App
     setup_directories
     setup_database
     setup_window
-    @simplenote = SimplenoteMediator.new(self) if internet_connection?
+    @simplenote = SimplenoteMediator.new(self)
 
     setup_simplenote_timer if ENV["RNOT_ENV"] == 'production' && simplenote_enabled?
     refresh_notes
@@ -24,20 +24,9 @@ class App
         puts "Simplenote syncing"
         @simplenote.sync
 
-        refresh_notes
+        search_text = @last_searched_text || ''
+        refresh_notes_with_search_text(search_text)
         sleep(60)
-
-=begin
-        dialog = Gtk::MessageDialog.new(@window,
-                                        Gtk::Dialog::DESTROY_WITH_PARENT,
-                                        Gtk::MessageDialog::QUESTION,
-                                        Gtk::MessageDialog::BUTTONS_CLOSE,
-                                        "Error loading file")
-        dialog.run { |r| puts "response=%d" % [r] }
-        dialog.destroy
-=end
-
-
       end
     end
 
@@ -93,6 +82,7 @@ class App
       @simplenote.push if simplenote_enabled? && internet_connection?
       Gtk.main_quit
     end
+
     @window.set_size_request(750, 500)
     @window.border_width = 10
     @window.signal_connect("focus-out-event") do |e, _|

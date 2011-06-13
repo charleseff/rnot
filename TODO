@@ -1,6 +1,7 @@
 - Feature todos:
-  - deletion
-  - properly refresh notes.  properly handle modified times
+  - deletion,
+    - 'are you sure' popup dialog
+  - properly refresh notes from SimpleNote.  properly handle modified times
   - Ctrl-F on text view
   - remember last session's settings
   - Ctrl-Z Ctrl-Shift-Z on text view

@@ -1,24 +1,17 @@
 module SearchTextMediator
   include Gtk
 
-  attr_accessor :search_text, :search_text_entry
+  attr_accessor :last_searched_text, :search_text_entry, :title_of_open_note
 
   def create_search_text_entry
     @search_text_entry = Entry.new
     @search_text_entry.signal_connect('key-release-event') do |e, _|
 
-      if search_text != e.text
-        @search_text = e.text
+      if @last_searched_text != e.text and title_of_open_note != e.text
+        @last_searched_text = e.text
+        @title_of_open_note = nil
         clear_open_note
-        selected_note = nil
-        notes_found = []
-        Note.all.each do |n|
-          if n.title.index(@search_text) || n.body.index(@search_text)
-            notes_found << n
-            selected_note = n if !selected_note.present? && n.title.index(@search_text)
-          end
-        end
-        refresh_notes(notes_found, selected_note)
+        refresh_notes_with_search_text(@last_searched_text)
       end
     end
 
