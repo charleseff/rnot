@@ -22,9 +22,9 @@ describe SearchTextMediator do
 
     describe "key-press-event" do
       before do
-        @app.treeview.selection.selected == nil
-     #   @app.search_text = 'foobar'
-@app.search_text_entry.text = 'foobar'
+        @app.treeview.selection.select_iter nil
+
+        @app.search_text_entry.text = 'foobar'
         @event_key = Gdk::EventKey.new(Gdk::Event::KEY_PRESS)
         @event_key.keyval = 65421
       end

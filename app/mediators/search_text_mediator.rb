@@ -7,7 +7,7 @@ module SearchTextMediator
     @search_text_entry = Entry.new
     @search_text_entry.signal_connect('key-release-event') do |e, _|
 
-      if @search_text != e.text
+      if search_text != e.text
         @search_text = e.text
         clear_open_note
         selected_note = nil
@@ -23,13 +23,12 @@ module SearchTextMediator
     end
 
     @search_text_entry.signal_connect('key-press-event') do |e, event_key|
-      @search_text = e.text
       if event_key.keyval == 65364 # down arrow
         treeview.set_cursor(TreePath.new(0), nil, false)
         treeview.grab_focus
       elsif [65421, 65293].include? event_key.keyval # return and keyboard return
         if !treeview.selection.selected.present?
-          @open_note = Note.create!(:title => @search_text, :body => '', :modified_locally => true,
+          @open_note = Note.create!(:title => e.text, :body => '', :modified_locally => true,
           :modified_at => Time.now)
 
           iter = notes_list_store.append
