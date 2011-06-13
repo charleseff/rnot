@@ -1,7 +1,7 @@
 GIT
   remote: git://github.com/charleseff/simplenote.git
-  revision: f087ac67cdfea875479f00493062e59ab2d712ec
-  ref: f087ac67cdfea875479f00493062e59ab2d712ec
+  revision: 02c1cb1a6d91d4deacba12cb585dd8a6ae1e27e5
+  ref: 02c1cb1a6d91d4deacba12cb585dd8a6ae1e27e5
   specs:
     simplenote (0.2.1)
       httparty (= 0.6.0)

@@ -16,7 +16,8 @@ module NoteEditMediator
 
   def save_note_if_open_and_changed
     if open_note.present? && open_note.body != text_edit_view.buffer.text
-      open_note.update_attributes(:body => text_edit_view.buffer.text, :modified_locally => true)
+      open_note.update_attributes(:body => text_edit_view.buffer.text, :modified_locally => true,
+      :modified_at => Time.now)
 
       # update the GUI to reflect new modified date:
       notes_list_store.each do |model, path, iter|

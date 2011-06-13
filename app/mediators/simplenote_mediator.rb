@@ -15,21 +15,18 @@ class SimplenoteMediator
     note_hashes.each do |note_hash|
       if note_hash['deleted'] == 1
         if note=Note.find_by_simplenote_key(note_hash['key'])
-          note.destroy 
+          note.destroy
         end
       else
         note=Note.find_by_simplenote_key(note_hash['key'])
         if note.blank?
-          simplenote_body = simplenote.get_note(note_hash['key'])['content']
-          title = parse_title(simplenote_body)
-
-          note.destroy  if note=Note.find_by_title(title)
-
-          Note.create!(:title => title, :body => parse_body(simplenote_body), :simplenote_syncnum => note_hash['syncnum'], :simplenote_key => note_hash['key'])
+          note_response = simplenote.get_note(note_hash['key'])
+          Note.create!(:title => parse_title(note_response['content']), :body => parse_body(note_response['content']), :simplenote_syncnum => note_hash['syncnum'], :simplenote_key => note_hash['key'],
+          :modified_at => Time.at(note_response['modifydate'].to_f))
         elsif note.simplenote_syncnum < note_hash['syncnum']
           note_response = simplenote.get_note(note_hash['key'])
           note.update_attributes(:title => parse_title(note_response['content']), :body => parse_body(note_response['content']),
-                                 :simplenote_syncnum => note_response['syncnum'], :modified_locally => false)
+                                 :simplenote_syncnum => note_response['syncnum'], :modified_locally => false, :modified_at => Time.at(note_response['modifydate'].to_f))
           # todo: update current window if it has note open, perhaps with an activerecord after_save callback
         end
       end
@@ -39,10 +36,10 @@ class SimplenoteMediator
   def push
     Note.modified_locally.each do |note|
       if note.simplenote_key.present?
-        update_hash = simplenote.update_note(note.simplenote_key, note.to_simplenote_content)
+        update_hash = simplenote.update_note(note.simplenote_key, {:content => note.to_simplenote_content, :modifydate => note.modified_at.to_f})
         note.update_attributes(:simplenote_syncnum => update_hash['syncnum'], :modified_locally=>false)
       else
-        create_hash = simplenote.create_note(note.to_simplenote_content)
+        create_hash = simplenote.create_note({:content => note.to_simplenote_content, :modifydate => note.modified_at.to_f})
         note.update_attributes(:simplenote_syncnum => create_hash['syncnum'], :simplenote_key => create_hash['key'],
                                :modified_locally=>false)
       end
@@ -50,10 +47,9 @@ class SimplenoteMediator
   end
 
   def sync
-    pull
-    push
+    pull if @app.internet_connection?
+    push if @app.internet_connection?
   end
-
 
   def parse_title(simplenote_body)
     simplenote_body[/(.*?)\n(.*)/m, 1].strip

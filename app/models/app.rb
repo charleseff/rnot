@@ -23,7 +23,21 @@ class App
       while (true) do
         puts "Simplenote syncing"
         @simplenote.sync
+
+        refresh_notes
         sleep(60)
+
+=begin
+        dialog = Gtk::MessageDialog.new(@window,
+                                        Gtk::Dialog::DESTROY_WITH_PARENT,
+                                        Gtk::MessageDialog::QUESTION,
+                                        Gtk::MessageDialog::BUTTONS_CLOSE,
+                                        "Error loading file")
+        dialog.run { |r| puts "response=%d" % [r] }
+        dialog.destroy
+=end
+
+
       end
     end
 
@@ -76,6 +90,7 @@ class App
       false
     end
     @window.signal_connect("destroy") do
+      @simplenote.push if simplenote_enabled? && internet_connection?
       Gtk.main_quit
     end
     @window.set_size_request(750, 500)

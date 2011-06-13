@@ -37,7 +37,8 @@ describe SimplenoteMediator do
 
       before do
         @updated_key = 'agtzaW1wbGUtbm90ZXINCxIETm90ZRjduukIDA'
-        @note = Factory(:note, :simplenote_key => @updated_key, :simplenote_syncnum => 1, :body => 'doo dah', :updated_at => Time.now-1.day, :created_at => Time.now-1.day)
+        @note = Factory(:note, :simplenote_key => @updated_key, :simplenote_syncnum => 1, :body => 'doo dah', :updated_at => Time.now-1.day, :created_at => Time.now-1.day,
+                        :modified_at => Time.now - 1.day)
       end
 
       it "updates note title" do
@@ -50,25 +51,25 @@ describe SimplenoteMediator do
         expect { VCR.use_cassette('simplenote/pull', :record => :none) { @simplenote.pull } }.to
         change { @note.reload.simplenote_syncnum }.to(2)
       end
-      it "updates updated_at time" do
-        updated_at_before = @note.updated_at
+      it "updates modified_at time" do
+        modified_at_before = @note.modified_at
         VCR.use_cassette('simplenote/pull') { @simplenote.pull }
-        @note.reload.updated_at.should > updated_at_before
+        @note.reload.modified_at.should_not == modified_at_before
+        @note.reload.modified_at.should be_within(1.second).of(Time.at(1307747762.909512))
       end
-      it "updates modified value in the notes list gui"
+      it "updates modified_at value in the notes list gui"
     end
 
     context 'local note present that is not updated on the server' do
       before do
         @updated_key = 'agtzaW1wbGUtbm90ZXINCxIETm90ZRjduukIDA'
         @note = Factory(:note, :simplenote_key => @updated_key, :simplenote_syncnum => 7,
-                        :body => 'some ish', :updated_at => Time.now-1.day, :created_at => Time.now-1.day)
+                        :body => 'some ish', :updated_at => Time.now-1.day, :created_at => Time.now-1.day,
+                        :modified_at => Time.now-1.day)
       end
 
       it "does not update updated_at time" do
-        updated_at_before = @note.updated_at
-        VCR.use_cassette('simplenote/pull') { @simplenote.pull }
-        @note.reload.updated_at.should == updated_at_before
+        expect { VCR.use_cassette('simplenote/pull') { @simplenote.pull } }.to_not change { @note.reload.modified_at }
       end
     end
 
@@ -77,31 +78,22 @@ describe SimplenoteMediator do
         @new_key = 'agtzaW1wbGUtbm90ZXINCxIETm90ZRisgdcIDA'
       end
 
-      it 'creates a new note note' do
+      it 'creates a new note' do
         expect { VCR.use_cassette('simplenote/pull') { @simplenote.pull } }.to change { Note.find_by_simplenote_key(@new_key).present? }.from(false).to(true)
       end
-      it "adds note to the notes list gui"
+      it "sets updated at to the note's time" do
+        VCR.use_cassette('simplenote/pull') { @simplenote.pull }
+        Note.find_by_simplenote_key(@new_key).modified_at.should be_within(1.second).of(Time.at(1307156250.604000))
 
-      context "another note exists locally with the same title" do
-        before do
-          @note = Factory(:note, :title => 'third', :modified_locally => true)
-        end
-        it "deletes that note" do
-          VCR.use_cassette('simplenote/pull') { @simplenote.pull }
-          lambda { @note.reload }.should raise_error ActiveRecord::RecordNotFound
-        end
-
-        it "creates a new note" do
-          expect { VCR.use_cassette('simplenote/pull') { @simplenote.pull } }.to change { Note.find_by_simplenote_key(@new_key).present? }.from(false).to(true)
-        end
       end
-
+      it "adds note to the notes list gui"
     end
 
     context "local note is modified locally and also has an update from the server" do
       before do
         @updated_key = 'agtzaW1wbGUtbm90ZXINCxIETm90ZRjduukIDA'
-        @note = Factory(:note, :simplenote_key => @updated_key, :simplenote_syncnum => 1, :body => 'some ish', :updated_at => Time.now-1.day, :created_at => Time.now-1.day, :modified_locally => true)
+        @note = Factory(:note, :simplenote_key => @updated_key, :simplenote_syncnum => 1, :body => 'some ish', :updated_at => Time.now-1.day,
+                        :created_at => Time.now-1.day, :modified_locally => true)
       end
       it "should mark the note as not modified locally" do
         expect { VCR.use_cassette('simplenote/pull') { @simplenote.pull } }.to change { @note.reload.modified_locally? }.from(true).to(false)
@@ -116,7 +108,8 @@ describe SimplenoteMediator do
       before do
         @updated_key = 'agtzaW1wbGUtbm90ZXINCxIETm90ZRjduukIDA'
         @note = Factory(:note, :simplenote_key => @updated_key, :simplenote_syncnum => 1, :body => 'some ish',
-                        :updated_at => Time.now-1.day, :created_at => Time.now-1.day, :title => 'tha title', :modified_locally => true)
+                        :title => 'tha title', :modified_locally => true,
+                        :modified_at => Time.strptime("10/05/2011 05:55", "%m/%d/%Y %H:%M"))
       end
       it "updates note's server syncnum" do
         before_syncnum = @note.reload.simplenote_syncnum
@@ -126,12 +119,20 @@ describe SimplenoteMediator do
       it 'sets the note as not modified locally' do
         expect { VCR.use_cassette('simplenote/push') { @simplenote.push } }.to change { @note.reload.modified_locally? }.from(true).to(false)
       end
+      it "updates the modifydate on the server" do
+        VCR.use_cassette('simplenote/push_check_modify_date', :record => :once) do
+          modifydate_before = @simplenote.simplenote.get_note(@updated_key)['modifydate'].to_f
+          @simplenote.push
+          modifydate_after = @simplenote.simplenote.get_note(@updated_key)['modifydate'].to_f
+          modifydate_after.should_not == modifydate_before
+          Time.at(modifydate_after).should == @note.modified_at
+        end
+      end
     end
 
     context 'note modified locally is new' do
       before do
-        @note = Factory(:note, :body => 'the real body', :updated_at => Time.now-1.day, :created_at => Time.now-1.day,
-                        :title => 'tha real title', :modified_locally=>true)
+        @note = Factory(:note, :modified_locally=>true, :modified_at => Time.at(1307757087.471967))
       end
       it 'updates local note with server key' do
         expect { VCR.use_cassette('simplenote/push_new') { @simplenote.push } }.to change { @note.reload.simplenote_key.present? }.from(false).to(true)
@@ -146,6 +147,13 @@ describe SimplenoteMediator do
         VCR.use_cassette('simplenote/push_new_ands_to_index') do
           @simplenote.push
           @simplenote.get_note_hashes.map { |h| h['key'] }.should include(@note.reload.simplenote_key)
+        end
+      end
+      it 'sets modifydate correctly' do
+        VCR.use_cassette('simplenote/push_new_and_get_note') do
+          @simplenote.push
+          @simplenote.simplenote.get_note(@note.reload.simplenote_key)['modifydate'].to_f.should be_within(1.second).of(
+                                                                                                     @note.modified_at.to_f)
         end
       end
     end

@@ -1,0 +1,101 @@
+--- 
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :post
+    uri: https://simple-note.appspot.com:443/api/login
+    body: |
+      ZW1haWw9Y2hhcmxlcy5maW5rZWwlMkJ0ZXN0JTQwZ21haWwuY29tJnBhc3N3
+      b3JkPWp1c3R0ZXN0aW5n
+
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      set-cookie: 
+      - auth=D18124203FEC3039AFDABCC747C3F97B053D176CF969DAD79129FDEC54CB0944; expires=Sun, 26-Jun-2011 01:49:34 GMT
+      - email=charles.finkel+test@gmail.com; expires=Sun, 26-Jun-2011 01:49:34 GMT
+      account-type: 
+      - "000"
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Sun, 12 Jun 2011 01:49:34 GMT
+      server: 
+      - Google Frontend
+    body: D18124203FEC3039AFDABCC747C3F97B053D176CF969DAD79129FDEC54CB0944
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/data/agtzaW1wbGUtbm90ZXINCxIETm90ZRjduukIDA?auth=D18124203FEC3039AFDABCC747C3F97B053D176CF969DAD79129FDEC54CB0944&email=charles.finkel%2Btest%40gmail.com
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Sun, 12 Jun 2011 01:49:35 GMT
+      server: 
+      - Google Frontend
+    body: "{\"modifydate\": \"1307843042.013911\", \"tags\": [], \"deleted\": 0, \"createdate\": \"1307141845.890000\", \"systemtags\": [], \"content\": \"tha title\\n\\nsome ish\", \"version\": 10, \"syncnum\": 10, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjduukIDA\", \"minversion\": 1}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :post
+    uri: https://simple-note.appspot.com:443/api2/data/agtzaW1wbGUtbm90ZXINCxIETm90ZRjduukIDA?auth=D18124203FEC3039AFDABCC747C3F97B053D176CF969DAD79129FDEC54CB0944&email=charles.finkel%2Btest%40gmail.com
+    body: "{\"content\":\"tha title\\n\\nsome ish\",\"modifydate\":1317819300.0}"
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Sun, 12 Jun 2011 01:49:36 GMT
+      server: 
+      - Google Frontend
+    body: "{\"modifydate\": \"1317819300.000000\", \"tags\": [], \"deleted\": 0, \"createdate\": \"1307141845.890000\", \"systemtags\": [], \"version\": 11, \"syncnum\": 11, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjduukIDA\", \"minversion\": 1}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://simple-note.appspot.com:443/api2/data/agtzaW1wbGUtbm90ZXINCxIETm90ZRjduukIDA?auth=D18124203FEC3039AFDABCC747C3F97B053D176CF969DAD79129FDEC54CB0944&email=charles.finkel%2Btest%40gmail.com
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html; charset=utf-8
+      cache-control: 
+      - no-cache
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      date: 
+      - Sun, 12 Jun 2011 01:49:37 GMT
+      server: 
+      - Google Frontend
+    body: "{\"modifydate\": \"1317819300.000000\", \"tags\": [], \"deleted\": 0, \"createdate\": \"1307141845.890000\", \"systemtags\": [], \"content\": \"tha title\\n\\nsome ish\", \"version\": 11, \"syncnum\": 11, \"key\": \"agtzaW1wbGUtbm90ZXINCxIETm90ZRjduukIDA\", \"minversion\": 1}"
+    http_version: "1.1"

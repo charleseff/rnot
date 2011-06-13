@@ -26,6 +26,14 @@ describe App do
 
       end
     end
+
+    describe "destroy" do
+      it "pushes simplenote changes" do
+        @app.stub(:internet_connection?).and_return(true)
+        @app.simplenote.should_receive(:push).exactly(1).times
+        @app.window.signal_emit("destroy")
+      end
+    end
   end
 
   describe "#simplenote_enabled?" do
