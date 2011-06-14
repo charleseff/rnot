@@ -32,7 +32,7 @@ describe SearchTextMediator do
         expect { @app.search_text_entry.signal_emit("key-press-event", @event_key) }.to change { Note.count }.by(1)
       end
 
-      it "create a new note with title set" do
+      it "creates a new note with title set" do
         @app.search_text_entry.signal_emit("key-press-event", @event_key)
         Note.last.title.should == 'foobar'
       end

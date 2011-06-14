@@ -24,8 +24,6 @@ class App
         puts "Simplenote syncing"
         @simplenote.sync
 
-        search_text = @last_searched_text || ''
-        refresh_notes_with_search_text(search_text)
         sleep(60)
       end
     end

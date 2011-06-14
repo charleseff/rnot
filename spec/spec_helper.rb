@@ -14,7 +14,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    Note.destroy_all
+    Note.delete_all!
   end
 end
 

@@ -15,22 +15,26 @@ class SimplenoteMediator
     note_hashes.each do |note_hash|
       if note_hash['deleted'] == 1
         if note=Note.find_by_simplenote_key(note_hash['key'])
-          note.destroy
+          note.update_attributes(:modified_locally => false, :deleted_at => Time.now)
         end
       else
-        note=Note.find_by_simplenote_key(note_hash['key'])
+        note=Note.with_deleted.find_by_simplenote_key(note_hash['key'])
         if note.blank?
           note_response = simplenote.get_note(note_hash['key'])
           Note.create!(:title => parse_title(note_response['content']), :body => parse_body(note_response['content']), :simplenote_syncnum => note_hash['syncnum'], :simplenote_key => note_hash['key'],
-          :modified_at => Time.at(note_response['modifydate'].to_f))
+                       :modified_at => Time.at(note_response['modifydate'].to_f))
         elsif note.simplenote_syncnum < note_hash['syncnum']
           note_response = simplenote.get_note(note_hash['key'])
           note.update_attributes(:title => parse_title(note_response['content']), :body => parse_body(note_response['content']),
-                                 :simplenote_syncnum => note_response['syncnum'], :modified_locally => false, :modified_at => Time.at(note_response['modifydate'].to_f))
+                                 :simplenote_syncnum => note_response['syncnum'], :modified_locally => false, :modified_at => Time.at(note_response['modifydate'].to_f),
+          :deleted_at => nil)
           # todo: update current window if it has note open, perhaps with an activerecord after_save callback
         end
       end
     end
+
+    @app.refresh_notes_with_search_text(@app.last_searched_text || '')
+
   end
 
   def push

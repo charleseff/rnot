@@ -86,7 +86,15 @@ describe SimplenoteMediator do
         Note.find_by_simplenote_key(@new_key).modified_at.should be_within(1.second).of(Time.at(1307156250.604000))
 
       end
-      it "adds note to the notes list gui"
+      it "adds note to the notes list gui" do
+        VCR.use_cassette('simplenote/pull') { @simplenote.pull }
+
+        found = false
+        @app.notes_list_store.each do |model, path, iter|
+          found = true if iter[App::ID] == Note.find_by_simplenote_key(@new_key).id
+        end
+        raise "note not found" unless found
+      end
     end
 
     context "local note is modified locally and also has an update from the server" do
@@ -100,7 +108,12 @@ describe SimplenoteMediator do
       end
 
       context "local note is marked as deleted locally" do
-        it "should mark the note as not deleted"
+        before do
+          @note.update_attributes(:deleted_at => Time.now)
+        end
+        it "should mark the note as not deleted" do
+          expect { VCR.use_cassette('simplenote/pull') { @simplenote.pull } }.to change { @note.reload.deleted_at }.to(nil)
+        end
       end
 
     end
