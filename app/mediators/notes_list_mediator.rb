@@ -21,8 +21,8 @@ module NotesListMediator
     scrolled_win
   end
 
-  def refresh_notes(notes = Note.all, selected_note = nil)
-    notes_to_add = notes.clone
+  def refresh_notes(notes = Note.not_deleted, selected_note = nil)
+    notes_to_add = notes.to_a
 
     iters_to_remove = []
     notes_list_store.each do |model, path, iter|
@@ -51,7 +51,7 @@ module NotesListMediator
   def refresh_notes_with_search_text(search_text,select_note=false)
     selected_note = nil
     notes_found = []
-    Note.all.each do |n|
+    Note.not_deleted.each do |n|
       if n.title.index(search_text) || n.body.index(search_text)
         notes_found << n
         #selected_note = n if !selected_note.present? && n.title.index(search_text)

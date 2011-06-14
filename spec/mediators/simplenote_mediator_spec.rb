@@ -29,7 +29,7 @@ describe SimplenoteMediator do
       end
 
       it 'deletes the note locally' do
-        expect { VCR.use_cassette('simplenote/pull', :record => :none) { @simplenote.pull } }.to change { Note.find_by_simplenote_key(@deleted_key).present? }.from(true).to(false)
+        expect { VCR.use_cassette('simplenote/pull', :record => :none) { @simplenote.pull } }.to change { Note.find_by_simplenote_key(@deleted_key).deleted_at.present? }.from(false).to(true)
       end
     end
 
@@ -173,6 +173,24 @@ describe SimplenoteMediator do
                                                                                                      @note.modified_at.to_f)
         end
       end
+    end
+
+    context 'note is deleted locally that exists on server' do
+      before do
+        @deleted_key = 'agtzaW1wbGUtbm90ZXINCxIETm90ZRjduukIDA'
+        @note = Factory(:note, :simplenote_key => @deleted_key, :simplenote_syncnum => 1, :body => 'some ish',
+                        :title => 'tha title', :modified_locally => true, :deleted_at => Time.now,
+                        :modified_at => Time.strptime("10/06/2011 05:55", "%m/%d/%Y %H:%M"))
+      end
+      it "updates the deleted file on the server" do
+        VCR.use_cassette('simplenote/push_delete') do
+          expect { @simplenote.push }.to change { @simplenote.simplenote.get_note(@deleted_key)['deleted'] }.from(0).to(1)
+        end
+      end
+      it "sets the note as not modified locally" do
+        expect { VCR.use_cassette('simplenote/push_delete') { @simplenote.push } }.to change { @note.reload.modified_locally? }.from(true).to(false)
+      end
+
     end
   end
 
