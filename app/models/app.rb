@@ -130,7 +130,65 @@ class App
                               ACCEL_VISIBLE) do
       search_text_entry.grab_focus
     end
+    @main_accel_group.connect(Gdk::Keyval::GDK_F, Gdk::Window::CONTROL_MASK,
+                              ACCEL_VISIBLE) do
+      if text_edit_view.focus?
+        dialog = Dialog.new
+        box1 = HBox.new(false, 0)
 
+        entry = Gtk::Entry.new
+        entry.text = "Search for ..."
+        find_button = Gtk::Button.new(Gtk::Stock::FIND)
+        entry.signal_connect("key-press-event") do |e, event_key|
+          if [65421, 65293].include? event_key.keyval # return and keyboard return
+            find_button.clicked
+          end
+
+        end
+
+        find_button.signal_connect("clicked") do
+
+          find = entry.text
+          first, last, success = @text_edit_view.buffer.selection_bounds
+
+          first = @text_edit_view.buffer.start_iter unless success
+
+          first, last = first.forward_search(find, Gtk::TextIter::SEARCH_TEXT_ONLY, last)
+
+          # Select the instance on the screen if the string is found.
+          # Otherwise, tell the user it has failed.
+          if (first)
+            mark = @text_edit_view.buffer.create_mark(nil, first, false)
+            # Scrolls the Gtk::TextView the minimum distance so
+            # that mark is contained within the visible area.
+            @text_edit_view.scroll_mark_onscreen(mark)
+
+            @text_edit_view.buffer.delete_mark(mark)
+            @text_edit_view.buffer.select_range(first, last)
+          else
+            # Gtk::MessageDialog.new(parent, flags, message_type, button_type, message = nil)
+            dialogue = Gtk::MessageDialog.new(
+                nil,
+                Gtk::Dialog::MODAL,
+                Gtk::MessageDialog::INFO,
+                Gtk::MessageDialog::BUTTONS_OK,
+                "The text was not found!"
+            )
+            dialogue.run
+            dialogue.destroy
+          end
+          first = last = nil # caccel any previous selections
+        end
+
+        box1.pack_start(entry)
+        box1.pack_start(find_button)
+        dialog.vbox.add(box1)
+
+        dialog.show_all
+        dialog.run
+        dialog.destroy
+      end
+    end
 
     menubar
   end

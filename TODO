@@ -1,11 +1,13 @@
 - Feature todos:
-  - Ctrl-F on text view
-  - remember last session's settings
+  - make linux/windows/mac executables
   - Ctrl-Z Ctrl-Shift-Z on text view
   - text preview on list widget
   - add frills (menu)
     - add ability to turn on/off Simplenote integration, set login/password
+    - help
   - move migrations to be outside of rails (see http://adam.heroku.com/past/2009/2/28/activerecord_migrations_outside_rails/)
   - deletion: 'are you sure' popup dialog
   - clean up test output
-  - make linux/windows/mac executables
+  - remember last session's settings
+  - add README.md
+  - Ctrl-F on text view - make so you can search twice
