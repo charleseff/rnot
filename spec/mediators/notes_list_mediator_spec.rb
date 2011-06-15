@@ -62,6 +62,27 @@ describe NotesListMediator do
     end
   end
 
+  describe "title_renderer" do
+    describe "signals" do
+      describe "edited" do
+        before do
+          @iter = @app.treeview.model.get_iter('0')
+          @app.treeview.selection.select_iter(@iter)
+          @note =Note.find(@iter[App::ID])
+        end
+        it "should change the title in the view to what was edited" do
+          expect { @app.title_renderer.signal_emit("edited", @iter.to_s, "some other text") }.to change { @iter[App::TITLE] }.to('some other text')
+        end
+        it "should change the title of the note attached to the iter" do
+          expect { @app.title_renderer.signal_emit("edited", @iter.to_s, "some other text") }.to change { @note.reload.title }.to('some other text')
+        end
+        it "should set note as modified locally" do
+          expect { @app.title_renderer.signal_emit("edited", @iter.to_s, "some other text") }.to change { @note.reload.modified_locally }.from(false).to(true)
+        end
+      end
+    end
+  end
+
   describe '#refresh_notes' do
     context "refresh_notes doesn't remove note" do
       it 'should keep iter selected on treeview after called' do

@@ -5,7 +5,7 @@ module NotesListMediator
   MODIFIED = 1
   ID = 2
 
-  attr_accessor :treeview, :notes_list_store
+  attr_accessor :treeview, :notes_list_store, :title_renderer
 
   def create_notes_list_scrolled_window
     @treeview = TreeView.new
@@ -96,8 +96,9 @@ module NotesListMediator
 
   private
   def setup_tree_view(treeview)
-    renderer = CellRendererText.new
-    column = TreeViewColumn.new("Title", renderer, "text" => TITLE)
+    @title_renderer = CellRendererText.new
+    @title_renderer.editable = true
+    column = TreeViewColumn.new("Title", @title_renderer, "text" => TITLE)
     column.sort_column_id = TITLE
     treeview.append_column(column)
     renderer = CellRendererText.new
@@ -105,7 +106,13 @@ module NotesListMediator
     column.sort_column_id = MODIFIED
     treeview.append_column(column)
 
-    treeview.signal_connect("key-press-event") do |window, event_key|
+    @title_renderer.signal_connect("edited") do |renderer, iter_path, new_text|
+      iter = treeview.model.get_iter(iter_path)
+      iter[TITLE] = new_text
+      Note.find(iter[App::ID]).update_attributes(:title => new_text, :modified_locally => true, :modified_at => Time.now)
+    end
+
+    treeview.signal_connect("key-press-event") do |treeview, event_key|
       if [65421, 65293].include? event_key.keyval # return and keyboard return
         text_edit_view.grab_focus
       elsif event_key.keyval == 65535 # delete

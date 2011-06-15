@@ -1,6 +1,4 @@
 - Feature todos:
-  - implement pending specs
-  - title renaming
   - Ctrl-F on text view
   - remember last session's settings
   - Ctrl-Z Ctrl-Shift-Z on text view
@@ -9,3 +7,5 @@
     - add ability to turn on/off Simplenote integration, set login/password
   - move migrations to be outside of rails (see http://adam.heroku.com/past/2009/2/28/activerecord_migrations_outside_rails/)
   - deletion: 'are you sure' popup dialog
+  - clean up test output
+  - make linux/windows/mac executables
