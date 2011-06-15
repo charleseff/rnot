@@ -28,7 +28,6 @@ module NoteEditMediator
   private
   def clear_open_note
     save_note_if_open_and_changed
-    @title_of_open_note = nil
     @open_note = nil
     text_edit_view.buffer.text = ''
     text_edit_view.editable = false

@@ -66,7 +66,6 @@ describe SimplenoteMediator do
         @note.reload.modified_at.should_not == modified_at_before
         @note.reload.modified_at.should be_within(1.second).of(Time.at(1307747762.909512))
       end
-      it "updates modified_at value in the notes list gui"
 
       context "note is in the treeview" do
         before do

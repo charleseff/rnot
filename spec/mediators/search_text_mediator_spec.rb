@@ -10,29 +10,50 @@ describe SearchTextMediator do
       it "should change search_text to value of text entry" do
         @app.search_text_entry.text = 'blady'
 
-        expect { @app.search_text_entry.signal_emit("key-release-event", Gdk::EventKey.new(Gdk::Event::KEY_PRESS)) }.
+        expect { @app.search_text_entry.signal_emit("key-release-event", Gdk::EventKey.new(Gdk::Event::KEY_RELEASE)) }.
             to change { @app.last_searched_text }.from(nil).to('blady')
       end
 
-      context "text is a match of one of the notes' titles/content" do
-        before do
-          @note = Factory(:note, :updated_at => Time.now-1.day, :created_at => Time.now-1.day,
-                          :modified_at => Time.now-1.day)
-          @app.search_text_entry.text = 'BLLLARGHHH'
-          @app.refresh_notes
+      context "notes exist" do
+        before { @note = Factory(:note, :updated_at => Time.now-1.day, :created_at => Time.now-1.day,
+                                 :modified_at => Time.now-1.day)
+        }
+        context "text is a match of one of the notes' titles/content" do
+          before do
 
-          @app.search_text_entry.text = @note.title
+            @app.search_text_entry.text = 'BLLLARGHHH'
+            @app.refresh_notes
+
+            @app.search_text_entry.text = @note.title
+          end
+
+          it "should highlight that note in the notes list" do
+            expect { @app.search_text_entry.signal_emit("key-release-event", nil) }.to change {
+              @app.treeview.selection.selected }.to(@app.iter_for_note(@note))
+          end
+          it "should set the text_edit_view to be that note's contents" do
+            expect { @app.search_text_entry.signal_emit("key-release-event", nil) }.to change {
+              @app.text_edit_view.buffer.text }.to(@note.body)
+          end
+
         end
 
-        it "should highlight that note in the notes list" do
-          expect { @app.search_text_entry.signal_emit("key-release-event", nil) }.to change {
-            @app.treeview.selection.selected }.to(@app.iter_for_note(@note))
-        end
-        it "should set the text_edit_view to be that note's contents" do
-          expect { @app.search_text_entry.signal_emit("key-release-event", nil) }.to change {
-            @app.text_edit_view.buffer.text }.to(@note.body)
+        context "note is selected" do
+          before do
+            @app.refresh_notes
+            @app.treeview.selection.select_iter @app.iter_for_note(@note)
+            @app.treeview.signal_emit("cursor-changed")
+            @app.treeview.selection.selected.should be_present
+            @app.text_edit_view.buffer.text.should == @note.body
+          end
+          it "wipes body from text edit view when a character is added to the search" do
+            @app.search_text_entry.text = @note.title + 'T'
+            expect { @app.search_text_entry.signal_emit("key-release-event", Gdk::EventKey.new(Gdk::Event::KEY_RELEASE)) }.to change {
+              @app.text_edit_view.buffer.text }.to('')
+          end
         end
       end
+
     end
 
     describe "key-press-event" do

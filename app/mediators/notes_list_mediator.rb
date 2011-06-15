@@ -44,6 +44,8 @@ module NotesListMediator
       treeview.selection.select_iter iter
       @open_note = selected_note
       text_edit_view.buffer.text = selected_note.body
+    elsif treeview.selection.selected.blank?
+      clear_open_note
     end
 
 
@@ -122,7 +124,6 @@ module NotesListMediator
         text_edit_view.buffer.text = @open_note.body
         text_edit_view.editable = true
 
-        @title_of_open_note = t.selection.selected[App::TITLE]
         @search_text_entry.text = t.selection.selected[App::TITLE]
       else
         clear_open_note

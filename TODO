@@ -1,7 +1,6 @@
 - Feature todos:
-  - bug: body stays (note doesn't save) if search results don't catch title
-  - title renaming
   - implement pending specs
+  - title renaming
   - Ctrl-F on text view
   - remember last session's settings
   - Ctrl-Z Ctrl-Shift-Z on text view

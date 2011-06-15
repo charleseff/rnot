@@ -7,9 +7,8 @@ module SearchTextMediator
     @search_text_entry = Entry.new
     @search_text_entry.signal_connect('key-release-event') do |e, _|
 
-      if @last_searched_text != e.text and @title_of_open_note != e.text
+      if @last_searched_text != e.text and @open_note.try(:title) != e.text
         @last_searched_text = e.text
-#        @title_of_open_note = nil
 #        clear_open_note
         refresh_notes_with_search_text(@last_searched_text, true)
       end
@@ -22,7 +21,7 @@ module SearchTextMediator
       elsif [65421, 65293].include? event_key.keyval # return and keyboard return
         if !treeview.selection.selected.present?
           @open_note = Note.create!(:title => e.text, :body => '', :modified_locally => true,
-          :modified_at => Time.now)
+                                    :modified_at => Time.now)
 
           iter = notes_list_store.append
           reload_values_for_iter(iter, @open_note)
