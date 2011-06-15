@@ -36,29 +36,60 @@ module NotesListMediator
 
     notes_to_add.each do |note|
       iter = notes_list_store.append
-      notes_list_store.set_value(iter, TITLE, note.title)
-      notes_list_store.set_value(iter, MODIFIED, note.updated_at.to_s)
-      notes_list_store.set_value(iter, ID, note.id)
-      if selected_note == note
-        treeview.selection.select_iter iter
-        @open_note = Note.find(treeview.selection.selected[App::ID])
-        text_edit_view.buffer.text = @open_note.body
-      end
+      reload_values_for_iter(iter, note)
     end
+
+    if selected_note.present?
+      iter = iter_for_note(selected_note)
+      treeview.selection.select_iter iter
+      @open_note = selected_note
+      text_edit_view.buffer.text = selected_note.body
+    end
+
 
   end
 
-  def refresh_notes_with_search_text(search_text,select_note=false)
+  def refresh_notes_with_search_text(search_text, select_note=false)
     selected_note = nil
     notes_found = []
     Note.not_deleted.each do |n|
-      if n.title.index(search_text) || n.body.index(search_text)
+      if n.title.index(search_text).present? || n.body.index(search_text).present?
         notes_found << n
         #selected_note = n if !selected_note.present? && n.title.index(search_text)
-        selected_note = n if select_note && !selected_note.present? && n.title.index(search_text)
+        selected_note = n if select_note && selected_note.blank? && n.title.index(search_text).present?
       end
     end
+
     refresh_notes(notes_found, selected_note)
+  end
+
+  def reload_values_for_iter(iter, note)
+    notes_list_store.set_value(iter, TITLE, note.title)
+    notes_list_store.set_value(iter, MODIFIED, note.modified_at.to_s)
+    notes_list_store.set_value(iter, ID, note.id)
+  end
+
+  def remove_note_from_view(note)
+    iter = iter_for_note(note)
+    @notes_list_store.remove iter if iter.present?
+  end
+
+  def update_note_in_view_if_present(note)
+    if iter=iter_for_note(note)
+      reload_values_for_iter(iter, note)
+    end
+  end
+
+  def add_note_to_view(note)
+    iter = notes_list_store.append
+    reload_values_for_iter(iter, note)
+  end
+
+  def iter_for_note(note)
+    notes_list_store.each do |model, path, iter|
+      return iter if iter[App::ID] == note.id
+    end
+    nil
   end
 
   private
@@ -77,9 +108,9 @@ module NotesListMediator
         text_edit_view.grab_focus
       elsif event_key.keyval == 65535 # delete
         if treeview.selection.selected.present?
-          notes_list_store.remove  treeview.selection.selected
-        # todo: should be a 'are you sure' popup dialog here..
-        @open_note.update_attributes(:deleted_at => Time.now, :modified_locally => true, :modified_at => Time.now)
+          notes_list_store.remove treeview.selection.selected
+          # todo: should be a 'are you sure' popup dialog here..
+          @open_note.update_attributes(:deleted_at => Time.now, :modified_locally => true, :modified_at => Time.now)
         end
       end
     end
@@ -89,6 +120,8 @@ module NotesListMediator
 
         @open_note = Note.find(t.selection.selected[App::ID])
         text_edit_view.buffer.text = @open_note.body
+        text_edit_view.editable = true
+
         @title_of_open_note = t.selection.selected[App::TITLE]
         @search_text_entry.text = t.selection.selected[App::TITLE]
       else

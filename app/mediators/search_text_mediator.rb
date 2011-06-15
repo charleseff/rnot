@@ -7,11 +7,11 @@ module SearchTextMediator
     @search_text_entry = Entry.new
     @search_text_entry.signal_connect('key-release-event') do |e, _|
 
-      if @last_searched_text != e.text and title_of_open_note != e.text
+      if @last_searched_text != e.text and @title_of_open_note != e.text
         @last_searched_text = e.text
-        @title_of_open_note = nil
-        clear_open_note
-        refresh_notes_with_search_text(@last_searched_text)
+#        @title_of_open_note = nil
+#        clear_open_note
+        refresh_notes_with_search_text(@last_searched_text, true)
       end
     end
 
@@ -25,10 +25,7 @@ module SearchTextMediator
           :modified_at => Time.now)
 
           iter = notes_list_store.append
-          notes_list_store.set_value(iter, App::TITLE, @open_note.title)
-          notes_list_store.set_value(iter, App::MODIFIED, @open_note.updated_at.to_s)
-          notes_list_store.set_value(iter, App::ID, @open_note.id)
-
+          reload_values_for_iter(iter, @open_note)
           treeview.selection.select_iter iter
         end
         text_edit_view.grab_focus

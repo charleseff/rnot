@@ -1,5 +1,7 @@
 - Feature todos:
-  - properly refresh notes from SimpleNote.  properly handle modified times
+  - bug: body stays (note doesn't save) if search results don't catch title
+  - title renaming
+  - implement pending specs
   - Ctrl-F on text view
   - remember last session's settings
   - Ctrl-Z Ctrl-Shift-Z on text view

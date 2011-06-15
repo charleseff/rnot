@@ -25,11 +25,20 @@ describe SimplenoteMediator do
     context 'local note present that is deleted on the server' do
       before do
         @deleted_key = 'agtzaW1wbGUtbm90ZXINCxIETm90ZRjay-cIDA'
-        Factory(:note, :simplenote_key => @deleted_key)
+        @note = Factory(:note, :simplenote_key => @deleted_key)
       end
 
       it 'deletes the note locally' do
-        expect { VCR.use_cassette('simplenote/pull', :record => :none) { @simplenote.pull } }.to change { Note.find_by_simplenote_key(@deleted_key).deleted_at.present? }.from(false).to(true)
+        expect { VCR.use_cassette('simplenote/pull', :record => :none) { @simplenote.pull } }.to change {
+          Note.find_by_simplenote_key(@deleted_key).deleted_at.present? }.from(false).to(true)
+      end
+
+      context "note is in the treeview" do
+        before { @app.refresh_notes }
+        it "removes note from the treeview" do
+          expect { VCR.use_cassette('simplenote/pull', :record => :none) { @simplenote.pull } }.to change {
+            @app.iter_for_note(@note).present? }.from(true).to(false)
+        end
       end
     end
 
@@ -58,6 +67,25 @@ describe SimplenoteMediator do
         @note.reload.modified_at.should be_within(1.second).of(Time.at(1307747762.909512))
       end
       it "updates modified_at value in the notes list gui"
+
+      context "note is in the treeview" do
+        before do
+          @app.refresh_notes
+          @iter = @app.iter_for_note(@note)
+        end
+        it "updates note title in the treeview" do
+          expect { VCR.use_cassette('simplenote/pull', :record => :none) { @simplenote.pull } }.to change {
+            @iter[App::TITLE] }.to('tha title')
+        end
+        it "updates note modified_at time in the treeview" do
+          expect { VCR.use_cassette('simplenote/pull', :record => :none) { @simplenote.pull } }.to change {
+            @iter[App::MODIFIED] }.to(Time.at(1307747762.909512).to_s)
+        end
+
+        context "note is currently selected" do
+          it "updates the text body with the server text"
+        end
+      end
     end
 
     context 'local note present that is not updated on the server' do
@@ -89,11 +117,7 @@ describe SimplenoteMediator do
       it "adds note to the notes list gui" do
         VCR.use_cassette('simplenote/pull') { @simplenote.pull }
 
-        found = false
-        @app.notes_list_store.each do |model, path, iter|
-          found = true if iter[App::ID] == Note.find_by_simplenote_key(@new_key).id
-        end
-        raise "note not found" unless found
+        @app.iter_for_note(Note.find_by_simplenote_key(@new_key)).should be_present
       end
     end
 

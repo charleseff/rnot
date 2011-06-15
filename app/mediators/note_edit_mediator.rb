@@ -17,23 +17,21 @@ module NoteEditMediator
   def save_note_if_open_and_changed
     if open_note.present? && open_note.body != text_edit_view.buffer.text
       open_note.update_attributes(:body => text_edit_view.buffer.text, :modified_locally => true,
-      :modified_at => Time.now)
+                                  :modified_at => Time.now)
 
       # update the GUI to reflect new modified date:
-      notes_list_store.each do |model, path, iter|
-        if iter[App::ID] == open_note.id
-          iter[App::MODIFIED] = open_note.updated_at.to_s
-          break
-        end
-      end
+
+      update_note_in_view_if_present(open_note)
     end
   end
 
   private
   def clear_open_note
     save_note_if_open_and_changed
+    @title_of_open_note = nil
     @open_note = nil
     text_edit_view.buffer.text = ''
+    text_edit_view.editable = false
   end
 
 end
