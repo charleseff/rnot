@@ -1,7 +1,6 @@
 require "rubygems"
 require "bundler"
 Bundler.require(:default, ENV["RNOT_ENV"].to_sym)
-require 'gtk2'
 
 dir = File.expand_path('..', __FILE__)
 
