@@ -149,7 +149,7 @@ describe SimplenoteMediator do
         @updated_key = 'agtzaW1wbGUtbm90ZXINCxIETm90ZRjduukIDA'
         @note = Factory(:note, :simplenote_key => @updated_key, :simplenote_syncnum => 1, :body => 'some ish',
                         :title => 'tha title', :modified_locally => true,
-                        :modified_at => Time.strptime("10/05/2011 05:55", "%m/%d/%Y %H:%M"))
+                        :modified_at => DateTime.strptime("10/05/2011 05:55 -0700", "%m/%d/%Y %H:%M %z"))
       end
       it "updates note's server syncnum" do
         before_syncnum = @note.reload.simplenote_syncnum
@@ -165,7 +165,7 @@ describe SimplenoteMediator do
           @simplenote.push
           modifydate_after = @simplenote.simplenote.get_note(@updated_key)['modifydate'].to_f
           modifydate_after.should_not == modifydate_before
-          Time.at(modifydate_after).should == @note.modified_at
+          Time.at(modifydate_after).to_datetime.should == @note.modified_at
         end
       end
     end
@@ -203,7 +203,7 @@ describe SimplenoteMediator do
         @deleted_key = 'agtzaW1wbGUtbm90ZXINCxIETm90ZRjduukIDA'
         @note = Factory(:note, :simplenote_key => @deleted_key, :simplenote_syncnum => 1, :body => 'some ish',
                         :title => 'tha title', :modified_locally => true, :deleted_at => Time.now,
-                        :modified_at => Time.strptime("10/06/2011 05:55", "%m/%d/%Y %H:%M"))
+                        :modified_at => DateTime.strptime("10/06/2011 05:55 -0700", "%m/%d/%Y %H:%M %z")) #DateTime.strptime("10/05/2011 05:55 -0700", "%m/%d/%Y %H:%M %z"))
       end
       it "updates the deleted file on the server" do
         VCR.use_cassette('simplenote/push_delete') do
