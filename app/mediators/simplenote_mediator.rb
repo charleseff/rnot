@@ -62,11 +62,19 @@ class SimplenoteMediator
   end
 
   def parse_title(simplenote_body)
-    simplenote_body[/(.*?)\n(.*)/m, 1].strip
+    if simplenote_body.include?("\n")
+      simplenote_body[/(.*?)\n.*/m, 1].strip
+    else
+      simplenote_body.strip
+    end
   end
 
   def parse_body(simplenote_body)
-    simplenote_body[/(.*?)\n(.*)/m, 2].strip
+    if simplenote_body.include?("\n")
+      simplenote_body[/.*?\n(.*)/m, 1].strip
+    else
+      ""
+    end
   end
 
   def get_note_hashes(options={})

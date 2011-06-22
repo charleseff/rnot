@@ -12,6 +12,7 @@ group :test do
   gem 'factory_girl', '1.3.3'
   gem 'vcr'
   gem 'fakeweb'
+  gem 'ruby-debug19', :require => 'ruby-debug'
 end
 
 group :console do

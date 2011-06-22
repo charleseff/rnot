@@ -20,6 +20,7 @@ GEM
       arel (~> 2.0.10)
       tzinfo (~> 0.3.23)
     activesupport (3.0.9)
+    archive-tar-minitar (0.5.2)
     arel (2.0.10)
     atk (0.90.9)
       glib2 (>= 0.90.9)
@@ -29,6 +30,7 @@ GEM
     builder (2.1.2)
     cairo (1.10.0)
       pkg-config
+    columnize (0.3.2)
     crack (0.1.7)
     diff-lcs (1.1.2)
     factory_girl (1.3.3)
@@ -45,6 +47,8 @@ GEM
       crack (= 0.1.7)
     i18n (0.5.0)
     json_pure (1.5.1)
+    linecache19 (0.5.12)
+      ruby_core_source (>= 0.1.4)
     pango (0.90.9)
       cairo (>= 1.10.0)
       glib2 (>= 0.90.9)
@@ -57,6 +61,16 @@ GEM
     rspec-expectations (2.6.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.6.0)
+    ruby-debug-base19 (0.11.25)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      ruby_core_source (>= 0.1.4)
+    ruby-debug19 (0.11.6)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      ruby-debug-base19 (>= 0.11.19)
+    ruby_core_source (0.1.5)
+      archive-tar-minitar (>= 0.5.2)
     sqlite3 (1.3.3)
     tzinfo (0.3.28)
     vcr (1.10.0)
@@ -73,6 +87,7 @@ DEPENDENCIES
   fakeweb
   gtk2
   rspec (= 2.6.0)
+  ruby-debug19
   simplenote!
   sqlite3
   vcr

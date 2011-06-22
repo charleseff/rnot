@@ -230,6 +230,11 @@ describe SimplenoteMediator do
             :title => "first",
             :body => "second\nthird"
         },
+        {
+            :string => "first",
+            :title => "first",
+            :body => ""
+        },
 
     ].each do |hash|
       it "returns #{hash[:title]} as the title for #{hash[:string]}" do
