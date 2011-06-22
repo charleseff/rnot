@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe SimplenoteMediator do
   before do
+    App.any_instance.stub(:simplenote_enabled?).and_return(true)
     @app = App.new
     @simplenote = @app.simplenote
   end

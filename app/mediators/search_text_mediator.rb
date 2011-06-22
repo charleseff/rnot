@@ -9,7 +9,6 @@ module SearchTextMediator
 
       if @last_searched_text != e.text and @open_note.try(:title) != e.text
         @last_searched_text = e.text
-#        clear_open_note
         refresh_notes_with_search_text(@last_searched_text, true)
       end
     end
