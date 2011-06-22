@@ -5,3 +5,5 @@ Rnot is a cross-platform note-taking app written in Ruby, designed for extremely
 ## Installation
 RNot is recommended to be run with RVM and Ruby 1.9.2.  Once installed, simply run `bundle`, and then run `rnot.rb` in the main directory.
 
+## Keyboard shortcuts
+Ctrl-L Open the search text entry.  Use this to quick search your notes

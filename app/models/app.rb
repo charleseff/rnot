@@ -4,23 +4,28 @@ class App
   include SearchTextMediator
   include NotesListMediator
   include NoteEditMediator
+  include Rnot::Config
 
   attr_accessor :window, :open_note, :paned, :simplenote
 
   def initialize
-    setup_directories
+    FileUtils.mkdir_p(App.notes_dir)
     setup_database
     setup_window
-    @simplenote = SimplenoteMediator.new(self)
+    self.config_hash = {:simplenote => {:enabled => false}} if config_hash.blank?
 
-    setup_simplenote_timer if ENV["RNOT_ENV"] == 'production' && simplenote_enabled?
+    if simplenote_enabled?
+      @simplenote = SimplenoteMediator.new(self)
+      setup_simplenote_timer if ENV["RNOT_ENV"] == 'production'
+    end
+
     refresh_notes
   end
 
   def setup_simplenote_timer
     Thread.abort_on_exception = true
     @simplenote_thread = Thread.new do
-      while (true) do
+      while simplenote_enabled? do
         puts "Simplenote syncing"
         @simplenote.sync
 
@@ -31,13 +36,7 @@ class App
   end
 
   def self.database_path
-    @database_path ||= lambda do
-      if ['production', 'console'].include? ENV["RNOT_ENV"]
-        File.join(notes_dir, 'rnot.sqlite3')
-      else
-        File.join(notes_dir, 'rnot.test.sqlite3')
-      end
-    end.call
+    @database_path ||= File.join(notes_dir, 'rnot.sqlite3')
   end
 
   def self.database_config
@@ -47,7 +46,12 @@ class App
   def self.notes_dir
     @notes_dir ||= lambda {
       rnot_dir = File.join(ENV['HOME'], '.rnot')
-      File.join(rnot_dir, 'notes')
+      dir = if ['production', 'console'].include? ENV["RNOT_ENV"]
+              File.join(rnot_dir, 'notes')
+            else
+              File.join(rnot_dir, 'notes-test')
+            end
+      dir
     }.call
   end
 
@@ -56,17 +60,13 @@ class App
   end
 
   def simplenote_enabled?
-    true
+    config_hash[:simplenote][:enabled] == true
   end
 
   private
   def setup_database
     ActiveRecord::Base.establish_connection(App.database_config)
     CreateNotes.up unless Note.table_exists?
-  end
-
-  def setup_directories
-    FileUtils.mkdir_p(App.notes_dir)
   end
 
   def setup_window
@@ -113,15 +113,91 @@ class App
     @main_accel_group = AccelGroup.new
     menubar = Gtk::MenuBar.new
 
-    filemenu = Gtk::Menu.new
+    menu_menu = Gtk::Menu.new
+    menu_m = Gtk::MenuItem.new "Menu"
+    menu_m.set_submenu menu_menu
 
-    file = Gtk::MenuItem.new("File", true)
+    help = Gtk::MenuItem.new("Help", true)
+    help.signal_connect('activate') do |f, s|
+      puts 'help activated'
+      dialog = Dialog.new
+      label = Gtk::Label.new(File.open(File.join(File.expand_path('../../../', __FILE__), 'README.md')).read)
+      label.wrap = true
+      dialog.vbox.add(label)
 
-    file.submenu = filemenu
+      dialog.show_all
+      dialog.run
+      dialog.destroy
+    end
+    menu_menu.append help
 
-    menubar.append(file)
+    options = Gtk::MenuItem.new("Options", true)
+    options.signal_connect('activate') do |f, s|
+      dialog = Dialog.new
 
-    filemenu.append(Gtk::ImageMenuItem.new(Gtk::Stock::NEW, @main_accel_group))
+      check_button = CheckButton.new("Simplenote integration")
+      check_button.active = config_hash[:simplenote][:enabled]
+      dialog.vbox.add(check_button)
+
+      label = Gtk::Label.new("email:")
+      email_entry = Entry.new()
+      email_entry.text = config_hash[:simplenote][:email]
+      hbox = HBox.new(false, 0)
+      hbox.pack_start(label)
+      hbox.pack_start(email_entry)
+      dialog.vbox.add(hbox)
+
+      label = Gtk::Label.new("password:")
+      password_entry = Entry.new()
+      password_entry.visibility=false
+      password_entry.invisible_char = 42 # *
+      password_entry.text = decrypted_simplenote_password
+      hbox = HBox.new(false, 0)
+      hbox.pack_start(label)
+      hbox.pack_start(password_entry)
+      dialog.vbox.add(hbox)
+
+      button = Button.new("Save")
+      dialog.vbox.add(button)
+
+      button.signal_connect("clicked") do
+
+        if check_button.active?
+          @simplenote = SimplenoteMediator.new(self, email_entry.text, password_entry.text)
+          begin
+            @simplenote.simplenote.login
+            encrypt_simplenote_password(password_entry.text)
+            setup_simplenote_timer if ENV["RNOT_ENV"] == 'production'
+
+            hash = config_hash
+            hash[:simplenote].merge!(:enabled=>true, :email=>email_entry.text)
+            self.config_hash = hash
+            msg = MessageDialog.new(dialog, Gtk::Dialog::MODAL,
+                                    Gtk::MessageDialog::INFO,
+                                    Gtk::MessageDialog::BUTTONS_OK,
+                                    "Simplenote connection established.")
+            msg.run
+            msg.destroy
+          rescue SimpleNoteLoginError
+            msg = MessageDialog.new(dialog, Gtk::Dialog::MODAL,
+                                    Gtk::MessageDialog::INFO,
+                                    Gtk::MessageDialog::BUTTONS_OK,
+                                    "Simplenote login failed.")
+            msg.run
+            msg.destroy
+          end
+        else
+          self.config_hash = config_hash.merge(:simplenote=>{:enabled=>false})
+        end
+      end
+
+      dialog.show_all
+      dialog.run
+      dialog.destroy
+    end
+    menu_menu.append(options)
+
+    menubar.append menu_m
 
     window.add_accel_group(@main_accel_group)
 
@@ -136,9 +212,9 @@ class App
         dialog = Dialog.new
         box1 = HBox.new(false, 0)
 
-        entry = Gtk::Entry.new
+        entry = Entry.new
         entry.text = "Search for ..."
-        find_button = Gtk::Button.new(Gtk::Stock::FIND)
+        find_button = Button.new(Gtk::Stock::FIND)
         entry.signal_connect("key-press-event") do |e, event_key|
           if [65421, 65293].include? event_key.keyval # return and keyboard return
             find_button.clicked

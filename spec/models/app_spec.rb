@@ -29,15 +29,24 @@ describe App do
 
     describe "destroy" do
       it "pushes simplenote changes" do
-        @app.stub(:internet_connection?).and_return(true)
-        @app.simplenote.should_receive(:push).exactly(1).times
-        @app.window.signal_emit("destroy")
+        App.any_instance.stub(:simplenote_enabled?).and_return(true)
+        app = App.new
+        app.stub(:internet_connection?).and_return(true)
+        app.simplenote.should_receive(:push).exactly(1).times
+        app.window.signal_emit("destroy")
       end
     end
   end
 
   describe "#simplenote_enabled?" do
-    it "returns true if config is set"
-    it "returns false if config is not set"
+    it "returns true if config is set" do
+      @app.config_hash = {:simplenote => {:enabled => true}}
+      @app.simplenote_enabled?.should == true
+    end
+    it "returns false if config is not set" do
+      @app.config_hash = {:simplenote => {:enabled => false}}
+      @app.simplenote_enabled?.should == false
+
+    end
   end
 end

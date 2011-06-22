@@ -2,9 +2,12 @@ class SimplenoteMediator
 
   attr_accessor :simplenote
 
-  def initialize(app)
+  def initialize(app, e=nil, p=nil)
     @app = app
-    @simplenote = SimpleNoteApi2.new(login, password)
+
+    e = email if e == nil
+    p = password if p == nil
+    @simplenote = SimpleNoteApi2.new(e, p)
     @simplenote
   end
 
@@ -23,7 +26,7 @@ class SimplenoteMediator
         if note.blank?
           note_response = simplenote.get_note(note_hash['key'])
           note = Note.create!(:title => parse_title(note_response['content']), :body => parse_body(note_response['content']), :simplenote_syncnum => note_hash['syncnum'], :simplenote_key => note_hash['key'],
-                       :modified_at => Time.at(note_response['modifydate'].to_f))
+                              :modified_at => Time.at(note_response['modifydate'].to_f))
           @app.add_note_to_view(note)
         elsif note.simplenote_syncnum < note_hash['syncnum']
           note_response = simplenote.get_note(note_hash['key'])
@@ -81,12 +84,20 @@ class SimplenoteMediator
   end
 
   private
-  def login
-    'charles.finkel+test@gmail.com'
+  def email
+    if ['production', 'console'].include? ENV["RNOT_ENV"]
+      @app.config_hash[:simplenote][:email]
+    else
+      'charles.finkel+test@gmail.com'
+    end
   end
 
   def password
-    'justtesting'
+    if  ['production', 'console'].include? ENV["RNOT_ENV"]
+      @app.decrypted_simplenote_password
+    else
+      'justtesting'
+    end
   end
 
 end

@@ -5,7 +5,7 @@ gem 'autoload_for'
 gem 'sqlite3'
 gem 'gtk2'
 gem 'activerecord', '3.0.9', :require => 'active_record'
-gem 'simplenote', :git => "git://github.com/charleseff/simplenote.git", :ref => '02c1cb1a6d91d4deacba12cb585dd8a6ae1e27e5'
+gem 'simplenote', :git => "git://github.com/charleseff/simplenote.git", :ref => '900a774dcc5044c94ca04391d4e3eade62ca3da5'
 
 group :test do
   gem 'rspec', '2.6.0'
