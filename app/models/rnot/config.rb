@@ -17,10 +17,11 @@ module Rnot::Config
   end
 
   def decrypted_simplenote_password
+    hash = config_hash
+    return nil unless config_hash[:simplenote].present? && hash[:simplenote][:iv].present?
     c = OpenSSL::Cipher::Cipher.new("aes-256-cbc")
     c.decrypt
     c.key = KEY
-    hash = config_hash
 
     c.iv = hash[:simplenote][:iv]
     d = c.update(hash[:simplenote][:e])

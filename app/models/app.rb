@@ -136,10 +136,12 @@ class App
       dialog = Dialog.new
 
       check_button = CheckButton.new("Simplenote integration")
+      check_button.active = config_hash[:simplenote][:enabled]
       dialog.vbox.add(check_button)
 
       label = Gtk::Label.new("email:")
       email_entry = Entry.new()
+      email_entry.text = config_hash[:simplenote][:email]
       hbox = HBox.new(false, 0)
       hbox.pack_start(label)
       hbox.pack_start(email_entry)
@@ -147,6 +149,9 @@ class App
 
       label = Gtk::Label.new("password:")
       password_entry = Entry.new()
+      password_entry.visibility=false
+      password_entry.invisible_char = 42 # *
+      password_entry.text = decrypted_simplenote_password
       hbox = HBox.new(false, 0)
       hbox.pack_start(label)
       hbox.pack_start(password_entry)
@@ -161,16 +166,19 @@ class App
           @simplenote = SimplenoteMediator.new(self, email_entry.text, password_entry.text)
           begin
             @simplenote.simplenote.login
+            encrypt_simplenote_password(password_entry.text)
             setup_simplenote_timer if ENV["RNOT_ENV"] == 'production'
-            encrypt_simplenote_password
-            self.config_hash = config_hash.merge(:simplenote=>{:enabled=>true, :email=>email_entry.text})
+
+            hash = config_hash
+            hash[:simplenote].merge!(:enabled=>true, :email=>email_entry.text)
+            self.config_hash = hash
             msg = MessageDialog.new(dialog, Gtk::Dialog::MODAL,
                                     Gtk::MessageDialog::INFO,
                                     Gtk::MessageDialog::BUTTONS_OK,
                                     "Simplenote connection established.")
             msg.run
             msg.destroy
-          rescue
+          rescue SimpleNoteLoginError
             msg = MessageDialog.new(dialog, Gtk::Dialog::MODAL,
                                     Gtk::MessageDialog::INFO,
                                     Gtk::MessageDialog::BUTTONS_OK,
@@ -181,38 +189,6 @@ class App
         else
           self.config_hash = config_hash.merge(:simplenote=>{:enabled=>false})
         end
-=begin
-        find = entry.text
-        first, last, success = @text_edit_view.buffer.selection_bounds
-
-        first = @text_edit_view.buffer.start_iter unless success
-
-        first, last = first.forward_search(find, Gtk::TextIter::SEARCH_TEXT_ONLY, last)
-
-        # Select the instance on the screen if the string is found.
-        # Otherwise, tell the user it has failed.
-        if (first)
-          mark = @text_edit_view.buffer.create_mark(nil, first, false)
-          # Scrolls the Gtk::TextView the minimum distance so
-          # that mark is contained within the visible area.
-          @text_edit_view.scroll_mark_onscreen(mark)
-
-          @text_edit_view.buffer.delete_mark(mark)
-          @text_edit_view.buffer.select_range(first, last)
-        else
-          # Gtk::MessageDialog.new(parent, flags, message_type, button_type, message = nil)
-          dialogue = Gtk::MessageDialog.new(
-              nil,
-              Gtk::Dialog::MODAL,
-              Gtk::MessageDialog::INFO,
-              Gtk::MessageDialog::BUTTONS_OK,
-              "The text was not found!"
-          )
-          dialogue.run
-          dialogue.destroy
-        end
-        first = last = nil # caccel any previous selections
-=end
       end
 
       dialog.show_all
