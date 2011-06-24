@@ -1,6 +1,5 @@
 - Feature todos:
-  - case-insensitive search
-  - remember last session's ratio on exit
+  - text-box search sux - fix it!
   - enter on text goes to edit pane if selected
   - up and down controls selected value correctly in notes list
   - hide window before completely exiting app (how to do that?)

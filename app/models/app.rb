@@ -9,10 +9,10 @@ class App
   attr_accessor :window, :open_note, :paned, :simplenote
 
   def initialize
+    self.config_hash = {:simplenote => {:enabled => false}, :window_ratio => 0.5} if config_hash.blank?
     FileUtils.mkdir_p(App.notes_dir)
     setup_database
     setup_window
-    self.config_hash = {:simplenote => {:enabled => false}} if config_hash.blank?
 
     if simplenote_enabled?
       @simplenote = SimplenoteMediator.new(self)
@@ -78,6 +78,7 @@ class App
     end
     @window.signal_connect("destroy") do
       @simplenote.push if simplenote_enabled? && internet_connection?
+      self.config_hash = config_hash.merge(:window_ratio => @paned.position.to_f/@paned.max_position.to_f)
       Gtk.main_quit
     end
 
@@ -103,7 +104,7 @@ class App
     @paned.pack2(text_edit_scrolled_window, true, true)
 
     box1.pack_start(@paned, true, true, 0)
-    @paned.position = @paned.max_position * 0.5
+    @paned.position = @paned.max_position * config_hash[:window_ratio]
 
     @window.add(box1)
 
