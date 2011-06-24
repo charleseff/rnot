@@ -1,8 +1,8 @@
 require "rubygems"
 require "bundler"
-Bundler.require(:default, ENV["RNOT_ENV"].to_sym)
-
 dir = File.expand_path('..', __FILE__)
+ENV['BUNDLE_GEMFILE'] = File.join(dir, '..', 'Gemfile')
+Bundler.require(:default, ENV["RNOT_ENV"].to_sym)
 
 Dir.glob(File.join(dir, '..', 'lib', '*.rb')).each { |file| require file }
 
