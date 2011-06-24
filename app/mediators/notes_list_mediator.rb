@@ -52,13 +52,14 @@ module NotesListMediator
   end
 
   def refresh_notes_with_search_text(search_text, select_note=false)
+    downcased_search_text = search_text.downcase
     selected_note = nil
     notes_found = []
     Note.not_deleted.each do |n|
-      if n.title.index(search_text).present? || n.body.index(search_text).present?
+      if n.title.downcase.index(downcased_search_text).present? || n.body.downcase.index(downcased_search_text).present?
         notes_found << n
         #selected_note = n if !selected_note.present? && n.title.index(search_text)
-        selected_note = n if select_note && selected_note.blank? && n.title.index(search_text).present?
+        selected_note = n if select_note && selected_note.blank? && n.title.downcase.index(downcased_search_text).present?
       end
     end
 

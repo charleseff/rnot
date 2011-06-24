@@ -16,11 +16,10 @@ describe SearchTextMediator do
 
       context "notes exist" do
         before { @note = Factory(:note, :updated_at => Time.now-1.day, :created_at => Time.now-1.day,
-                                 :modified_at => Time.now-1.day)
+                                 :modified_at => Time.now-1.day, :title => "Oh Yeah")
         }
         context "text is a match of one of the notes' titles/content" do
           before do
-
             @app.search_text_entry.text = 'BLLLARGHHH'
             @app.refresh_notes
 
@@ -36,6 +35,19 @@ describe SearchTextMediator do
               @app.text_edit_view.buffer.text }.to(@note.body)
           end
 
+        end
+
+        context "text is a match of note's content in case insensitive" do
+          before do
+            @app.search_text_entry.text = 'BLLLARGHHH'
+            @app.refresh_notes
+
+            @app.search_text_entry.text = @note.title.downcase
+
+          end
+          it "should highlight that note in the notes list" do
+            expect { @app.search_text_entry.signal_emit("key-release-event", Gdk::EventKey.new(Gdk::Event::KEY_RELEASE)) }.to change { @app.treeview.selection.selected }.to(@app.iter_for_note(@note))
+          end
         end
 
         context "note is selected" do
