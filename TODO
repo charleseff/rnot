@@ -1,4 +1,11 @@
 - Feature todos:
+  - case-insensitive search
+  - remember last session's ratio on exit
+  - enter on text goes to edit pane if selected
+  - up and down controls selected value correctly in notes list
+  - hide window before completely exiting app (how to do that?)
+  - gemify
+  - deletion: 'are you sure' popup dialog
   - make linux/windows/mac executables
   - Ctrl-Z Ctrl-Shift-Z on text view
   - text preview on list widget
@@ -6,9 +13,6 @@
     - add ability to turn on/off Simplenote integration, set login/password
     - help
   - move migrations to be outside of rails (see http://adam.heroku.com/past/2009/2/28/activerecord_migrations_outside_rails/)
-  - deletion: 'are you sure' popup dialog
-  - clean up test output
-  - remember last session's settings
   - add README.md
   - Ctrl-F on text view - make so you can search twice
   - make website akin to something like this? http://ssokolow.github.com/quicktile/
