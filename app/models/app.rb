@@ -6,11 +6,14 @@ class App
   include NoteEditMediator
   include Rnot::Config
 
-  attr_accessor :window, :open_note, :paned, :simplenote
+  attr_accessor :window, :open_note, :paned, :simplenote, :log
 
   def initialize
     self.config_hash = {:simplenote => {:enabled => false}, :window_ratio => 0.5} if config_hash.blank?
     FileUtils.mkdir_p(App.notes_dir)
+
+    self.log = Logger.new(App.rnot_dir + "/log" + ENV["RNOT_ENV"])
+    
     setup_database
     setup_window
 
@@ -45,14 +48,17 @@ class App
 
   def self.notes_dir
     @notes_dir ||= lambda {
-      rnot_dir = File.join(ENV['HOME'], '.rnot')
       dir = if ['production', 'console'].include? ENV["RNOT_ENV"]
-              File.join(rnot_dir, 'notes')
+              File.join(App.rnot_dir, 'notes')
             else
-              File.join(rnot_dir, 'notes-test')
+              File.join(App.rnot_dir, 'notes-test')
             end
       dir
     }.call
+  end
+
+  def self.rnot_dir
+    @rnot_dir ||= File.join(ENV['HOME'], '.rnot')
   end
 
   def internet_connection?
@@ -202,7 +208,7 @@ class App
 
     window.add_accel_group(@main_accel_group)
 
-    # ctrl-L:
+      # ctrl-L:
     @main_accel_group.connect(Gdk::Keyval::GDK_L, Gdk::Window::CONTROL_MASK,
                               ACCEL_VISIBLE) do
       search_text_entry.grab_focus
@@ -232,12 +238,12 @@ class App
 
           first, last = first.forward_search(find, Gtk::TextIter::SEARCH_TEXT_ONLY, last)
 
-          # Select the instance on the screen if the string is found.
-          # Otherwise, tell the user it has failed.
+            # Select the instance on the screen if the string is found.
+            # Otherwise, tell the user it has failed.
           if (first)
             mark = @text_edit_view.buffer.create_mark(nil, first, false)
-            # Scrolls the Gtk::TextView the minimum distance so
-            # that mark is contained within the visible area.
+              # Scrolls the Gtk::TextView the minimum distance so
+              # that mark is contained within the visible area.
             @text_edit_view.scroll_mark_onscreen(mark)
 
             @text_edit_view.buffer.delete_mark(mark)
