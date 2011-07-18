@@ -130,7 +130,6 @@ module NotesListMediator
 
         @open_note = Note.find(t.selection.selected[App::ID])
         text_edit_view.buffer.text = @open_note.body
-        text_edit_view.editable = true
 
         @search_text_entry.text = t.selection.selected[App::TITLE]
       else

@@ -11,7 +11,7 @@ class SimplenoteMediator
     @simplenote
   end
 
-  # always overwrite local changes with server changes
+    # always overwrite local changes with server changes
   def pull
     note_hashes = get_note_hashes(:length=>100)
 
