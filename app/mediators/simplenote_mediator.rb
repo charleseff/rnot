@@ -60,7 +60,7 @@ class SimplenoteMediator
     begin
       yield
     rescue Crack::ParseError => e
-      App.log("Crack::ParseError parsing #{update_data.inspect}")
+      App.log(e.inspect)
       raise e
     end
   end
