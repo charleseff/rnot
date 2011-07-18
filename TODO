@@ -1,5 +1,25 @@
 - Feature todos:
-  - text-box search sux - fix it!
+  - fix bug crash:
+/home/charles/.rvm/gems/ruby-1.9.2-p180@rnot/gems/crack-0.1.7/lib/crack/json.rb:14:in `rescue in parse': Invalid JSON string (Crack::ParseError)
+	from /home/charles/.rvm/gems/ruby-1.9.2-p180@rnot/gems/crack-0.1.7/lib/crack/json.rb:12:in `parse'
+	from /home/charles/.rvm/gems/ruby-1.9.2-p180@rnot/gems/httparty-0.6.0/lib/httparty/parser.rb:116:in `json'
+	from /home/charles/.rvm/gems/ruby-1.9.2-p180@rnot/gems/httparty-0.6.0/lib/httparty/parser.rb:136:in `parse_supported_format'
+	from /home/charles/.rvm/gems/ruby-1.9.2-p180@rnot/gems/httparty-0.6.0/lib/httparty/parser.rb:103:in `parse'
+	from /home/charles/.rvm/gems/ruby-1.9.2-p180@rnot/gems/httparty-0.6.0/lib/httparty/parser.rb:66:in `call'
+	from /home/charles/.rvm/gems/ruby-1.9.2-p180@rnot/gems/httparty-0.6.0/lib/httparty/request.rb:180:in `parse_response'
+	from /home/charles/.rvm/gems/ruby-1.9.2-p180@rnot/gems/httparty-0.6.0/lib/httparty/request.rb:164:in `handle_response'
+	from /home/charles/.rvm/gems/ruby-1.9.2-p180@rnot/gems/httparty-0.6.0/lib/httparty/request.rb:57:in `perform'
+	from /home/charles/.rvm/gems/ruby-1.9.2-p180@rnot/gems/httparty-0.6.0/lib/httparty.rb:280:in `perform_request'
+	from /home/charles/.rvm/gems/ruby-1.9.2-p180@rnot/gems/httparty-0.6.0/lib/httparty.rb:248:in `post'
+	from /home/charles/.rvm/gems/ruby-1.9.2-p180@rnot/bundler/gems/simplenote-900a774dcc50/lib/simplenote_api2.rb:52:in `update_note'
+	from /home/charles/Development/rnot/app/mediators/simplenote_mediator.rb:49:in `block in push'
+	from /home/charles/.rvm/gems/ruby-1.9.2-p180@rnot/gems/activerecord-3.0.9/lib/active_record/relation.rb:13:in `each'
+	from /home/charles/.rvm/gems/ruby-1.9.2-p180@rnot/gems/activerecord-3.0.9/lib/active_record/relation.rb:13:in `each'
+	from /home/charles/Development/rnot/app/mediators/simplenote_mediator.rb:45:in `push'
+	from /home/charles/Development/rnot/app/mediators/simplenote_mediator.rb:61:in `sync'
+	from /home/charles/Development/rnot/app/models/app.rb:30:in `block in setup_simplenote_timer'
+
+  
   - enter on text goes to edit pane if selected
   - up and down controls selected value correctly in notes list
   - hide window before completely exiting app (how to do that?)
