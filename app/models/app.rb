@@ -102,7 +102,7 @@ class App
     create_search_text_entry
     box1.pack_start(@search_text_entry, false, true, 5)
 
-    text_edit_scrolled_window = create_text_edit_scrolled_window
+    text_edit_scrolled_window = create_text_edit_window
     notes_list_scrolled_window = create_notes_list_scrolled_window
 
     @paned = VPaned.new

@@ -3,7 +3,7 @@ module NoteEditMediator
 
   attr_accessor :text_edit_view
 
-  def create_text_edit_scrolled_window
+  def create_text_edit_window
     @text_edit_view = TextView.new
     @text_edit_view.wrap_mode = Gtk::TextTag::WRAP_WORD
     @text_edit_view.buffer.text = ""
