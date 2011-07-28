@@ -60,7 +60,7 @@ class SimplenoteMediator
     begin
       yield
     rescue Crack::ParseError => e
-      @app.log(e.inspect)
+      @app.log.error(e.inspect)
       raise e
     end
   end
