@@ -49,14 +49,17 @@ class SimplenoteMediator
         update_hash = log_and_raise_on_exception { simplenote.update_note(note.simplenote_key, update_data) }
         note.update_attributes(:simplenote_syncnum => update_hash['syncnum'], :modified_locally=>false)
       else
-        create_hash = simplenote.create_note({:content => note.to_simplenote_content, :modifydate => note.modified_at.to_f})
+        hash = {:content => note.to_simplenote_content, :modifydate => note.modified_at.to_f}
+        @app.log.info("pushing hash: #{hash.inspect}")
+        create_hash = simplenote.create_note(hash)
         note.update_attributes(:simplenote_syncnum => create_hash['syncnum'], :simplenote_key => create_hash['key'],
                                :modified_locally=>false)
       end
     end
   end
 
-  def log_and_raise_on_exception
+  def
+  log_and_raise_on_exception
     begin
       yield
     rescue Crack::ParseError => e
