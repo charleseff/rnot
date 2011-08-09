@@ -46,7 +46,7 @@ class SimplenoteMediator
       if note.simplenote_key.present?
         update_data = {:content => note.to_simplenote_content, :modifydate => note.modified_at.to_f}
         update_data.merge!(:deleted => 1) if note.deleted?
-        update_hash = log_and_raise_on_exception { simplenote.update_note(note.simplenote_key, update_data) }
+        update_hash = log_and_rescue_on_exception { simplenote.update_note(note.simplenote_key, update_data) }
         note.update_attributes(:simplenote_syncnum => update_hash['syncnum'], :modified_locally=>false)
       else
         hash = {:content => note.to_simplenote_content, :modifydate => note.modified_at.to_f}
@@ -59,12 +59,14 @@ class SimplenoteMediator
   end
 
   def
-  log_and_raise_on_exception
+  log_and_rescue_on_exception
     begin
       yield
     rescue Crack::ParseError => e
       @app.log.error(e.inspect)
       raise e
+    rescue Exception => e
+      @app.log.error(e.inspect)
     end
   end
 
@@ -95,7 +97,7 @@ class SimplenoteMediator
     begin
       o = options
       o.merge!(:mark => mark) if mark.present?
-      index = log_and_raise_on_exception { simplenote.get_index(o) }
+      index = log_and_rescue_on_exception { simplenote.get_index(o) }
       data += index['data']
       mark = index['mark']
     end while mark.present?
