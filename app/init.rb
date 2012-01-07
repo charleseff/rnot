@@ -6,7 +6,8 @@ Bundler.require(:default, ENV["RNOT_ENV"].to_sym)
 
 Dir.glob(File.join(dir, '..', 'lib', '*.rb')).each { |file| require file }
 
-include AutoloadFor
-autoload_for(File.join(dir, 'mediators'))
-autoload_for(File.join(dir, 'models'))
-autoload_for(File.join(dir, 'migrations'))
+require 'active_support/all'
+require 'active_support/dependencies'
+ActiveSupport::Dependencies.autoload_paths << File.join(dir, 'mediators')
+ActiveSupport::Dependencies.autoload_paths << File.join(dir, 'models')
+ActiveSupport::Dependencies.autoload_paths << File.join(dir, 'migrations')
